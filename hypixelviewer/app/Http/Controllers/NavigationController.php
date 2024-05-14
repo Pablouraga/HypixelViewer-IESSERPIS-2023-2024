@@ -4,8 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class GeneralController extends Controller
+class NavigationController extends Controller
 {
+    public function findPlayer(Request $request)
+    {
+        //Api request to https://playerdb.co/api/player/minecraft/$ID
+
+        try {
+            $url = "https://playerdb.co/api/player/minecraft/" . $request->input('username');
+            $json = file_get_contents($url);
+            $data = json_decode($json, true);
+        } catch (\Exception $e) {
+            return redirect('/')->with('error', 'Player not found');
+        }
+        session(['username' => $data['data']['player']['username']]);
+        session(['uuid' => $data['data']['player']['id']]);
+        return view('generalView', ['user' => $data]);
+    }
+
     public function serverStats()
     {
         $url = "https://api.hypixel.net/v2/player?key=" . env('HYPIXEL_API_KEY') . "&uuid=" . session('uuid');
