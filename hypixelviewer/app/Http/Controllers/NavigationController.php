@@ -32,10 +32,30 @@ class NavigationController extends Controller
 
     public function auctionHistory()
     {
-        $url = "https://api.hypixel.net/status?key=" . env('HYPIXEL_API_KEY');
-        $json = file_get_contents($url);
-        $data = json_decode($json, true);
-        return view('auctionHistory', ['auctionData' => $data]);
+        $trimmedUuid = str_replace('-', '', session('uuid'));
+        //get bid history 
+        $bidsUrl = "https://sky.coflnet.com/api/player/" . $trimmedUuid .  "/bids?page=";
+
+        for ($i = 0; $i < 5; $i++) {
+            $bidsJson = file_get_contents($bidsUrl . $i);
+            $bidsData = json_decode($bidsJson, true);
+            foreach ($bidsData as $auction) {
+                $bidsDataFinal[] = $auction;
+            }
+        }
+
+        //get auction history
+        $auctionsUrl = "https://sky.coflnet.com/api/player/" . $trimmedUuid .  "/auctions?page=";
+
+        for ($i = 0; $i < 5; $i++) {
+            $auctionsJson = file_get_contents($auctionsUrl . $i);
+            $auctionsData = json_decode($auctionsJson, true);
+            foreach ($auctionsData as $auction) {
+                $auctionsDataFinal[] = $auction;
+            }
+        }
+
+        return view('auctionHistory', ['bidsData' => $bidsDataFinal, 'auctionsData' => $auctionsDataFinal]);
     }
 
     public function skyblockStats()
@@ -54,9 +74,17 @@ class NavigationController extends Controller
 
     public function guildDetails()
     {
-        $url = "https://api.hypixel.net/status?key=" . env('HYPIXEL_API_KEY');
+        // https://api.hypixel.net/v2/guild?key=ba3ad15e-95e0-4134-8ced-5c3b76516167&player=c4319a64-486d-4efb-9803-abde4cf40ffd
+        $url = "https://api.hypixel.net/v2/guild?key=" . env('HYPIXEL_API_KEY') . '&player=' . session('uuid');
         $json = file_get_contents($url);
         $data = json_decode($json, true);
-        return view('stats', ['stats' => $data]);
+        if ($data['guild'] != null) {
+            foreach ($data['guild']['members'] as $key => $player) {
+                $url = "https://playerdb.co/api/player/minecraft/" . $player['uuid'];
+                $json = file_get_contents($url);
+                $data['guild']['members'][$key]['username'] = json_decode($json, true)['data']['player']['username'];
+            }
+        }
+        return view('guildDetails', ['guildDetails' => $data]);
     }
 }
