@@ -3,11 +3,13 @@
 @section('title', 'Home - HypixelViewer')
 
 @section('content')
-    <form action="{{ route('generalView') }}" method="get">
+    <form class="form-inline" action="{{ route('generalView') }}" method="GET">
         @csrf
-        <label for="username"></label>
-        <input type="text" name="username" placeholder="Enter player name">
-        <button type="submit">Submit</button>
+        <div class="input-group">
+            <label for="username"></label>
+            <input type="text" name="username" placeholder="Enter player name" class="form-control">
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </div>
     </form>
 
     @if (session('error'))
