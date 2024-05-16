@@ -69,7 +69,7 @@ class NavigationController extends Controller
                 $data = $item;
             }
         }
-        return view('skyblockStats', ['stats' => $data]);
+        return view('skyblockStats', ['skyblockStats' => $data]);
     }
 
     public function guildDetails()

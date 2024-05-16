@@ -7,15 +7,15 @@
     <div class="container">
         {{-- Profile name --}}
         <div class="profile-name">
-            Profile: {{ $stats['cute_name'] }}
+            Profile: {{ $skyblockStats['cute_name'] }}
         </div>
         {{-- Bank balance formatting --}}
         <div class="bank-balance">
-            Bank: {{ number_format(round((float) $stats['banking']['balance'], 2), 2, '.', ',') }}
+            Bank: {{ number_format(round((float) $skyblockStats['banking']['balance'], 2), 2, '.', ',') }}
         </div>
         <div class="members">
             Members:
-            @foreach ($stats['members'] as $key => $member)
+            @foreach ($skyblockStats['members'] as $key => $member)
                 @php
                     $url = 'https://playerdb.co/api/player/minecraft/' . $key;
                     $json = file_get_contents($url);
@@ -23,7 +23,7 @@
                 @endphp
                 <div class="card mb-3">
                     <div class="card-header">
-                        {{ $data['data']['player']['username'] }} {{-- - {{ $key }} --}}
+                        {{ $data['data']['player']['username'] }} {{-- {{ $key }} --}}
                     </div>
                     <div class="card-body">
                         @if (isset($member['leveling']))
@@ -212,9 +212,5 @@
             @endforeach
         </div>
     </div>
-    {{-- @dd($stats['members']['96323cab537e4a50ad62d02e0612e707']['player_data']['experience']) --}}
-    //Stone pickaxe image
-
-    {{-- @dd($skillLevelingCumulativeCost) --}}
-    {{-- @dd(session('username')) --}}
+    {{-- @dd($skyblockStats['members']['96323cab537e4a50ad62d02e0612e707']['player_data']['experience']) --}}
 @endsection
