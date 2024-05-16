@@ -1,4 +1,4 @@
-@extends('contentlayout')
+@extends('layouts.general')
 
 @section('title', session('username') . ' - HypixelViewer')
 
@@ -29,6 +29,8 @@
                         @if (isset($member['leveling']))
                             {{-- Player level --}}
                             <div class="skyblock-level">Level: {{ $member['leveling']['experience'] / 100 }}</div>
+                        @else
+                            <div class="skyblock-level">No level found</div>
                         @endif
                         {{-- Purse formatting --}}
                         <div class="player-purse">
@@ -41,6 +43,7 @@
                             Fairy souls collected: {{ $member['fairy_soul']['total_collected'] }}
                         </div>
                         @php
+                            //Skill leveling costs
                             $skillLevelingCumulativeCost = [
                                 0 => 0,
                                 1 => 50,
@@ -104,7 +107,7 @@
                                 59 => 104672425,
                                 60 => 111672425,
                             ];
-
+                            //Runecrafting leveling costs
                             $runecraftingLevelingCumulativeCost = [
                                 0 => 0,
                                 1 => 50,
@@ -133,7 +136,7 @@
                                 24 => 75400,
                                 25 => 94450,
                             ];
-
+                            //Social leveling costs
                             $socialLevelingCumulativeCost = [
                                 0 => 0,
                                 1 => 50,
@@ -162,8 +165,6 @@
                                 24 => 222800,
                                 25 => 272800,
                             ];
-
-                            // $skillLevelingCumulativeCost = array_flip($skillLevelingCumulativeCost);
 
                         @endphp
                         {{-- Skills --}}
@@ -196,6 +197,10 @@
                                     @endif
                                 @endforeach
                             </div>
+                        @else
+                            <div class="player-skills">
+                                No skills found
+                            </div>
                         @endif
                     </div>
                     <div class="card-footer">
@@ -211,4 +216,5 @@
     //Stone pickaxe image
 
     {{-- @dd($skillLevelingCumulativeCost) --}}
+    {{-- @dd(session('username')) --}}
 @endsection
