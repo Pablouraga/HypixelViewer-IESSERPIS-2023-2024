@@ -78,13 +78,13 @@ class NavigationController extends Controller
         $url = "https://api.hypixel.net/v2/guild?key=" . env('HYPIXEL_API_KEY') . '&player=' . session('uuid');
         $json = file_get_contents($url);
         $data = json_decode($json, true);
-        if ($data['guild'] != null) {
-            foreach ($data['guild']['members'] as $key => $player) {
-                $url = "https://playerdb.co/api/player/minecraft/" . $player['uuid'];
-                $json = file_get_contents($url);
-                $data['guild']['members'][$key]['username'] = json_decode($json, true)['data']['player']['username'];
-            }
-        }
+        // if ($data['guild'] != null) {
+        //     foreach ($data['guild']['members'] as $key => $player) {
+        //         $url = "https://playerdb.co/api/player/minecraft/" . $player['uuid'];
+        //         $json = file_get_contents($url);
+        //         $data['guild']['members'][$key]['username'] = json_decode($json, true)['data']['player']['username'];
+        //     }
+        // }
         return view('guildDetails', ['guildDetails' => $data]);
     }
 }

@@ -20,26 +20,36 @@
                             <div class="card-header">
                                 <h5 class="card-title">{{ $guildDetails['guild']['name'] }}</h5>
                             </div>
+                            <div class="card-body">
+                                <div class="card-text">
+                                    <p>Created:
+                                        {{ \Carbon\Carbon::createFromTimestamp($guildDetails['guild']['created'] / 1000)->format('d-m-Y h:i:s') }}
+                                    </p>
+                                    <p>Description: {{ $guildDetails['guild']['description'] }}</p>
+                                    <p>Members: {{ count($guildDetails['guild']['members']) }}</p>
+                                    <p>Tag: {{ $guildDetails['guild']['tag'] }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-8">
                         <div class="card mt-3">
                             <div class="card-header">
-                                <h5 class="card-title">Guild Members</h5>
+                                <h5 class="card-title">Guild Ranks</h5>
                             </div>
                             <div class="card-body">
-                                @foreach ($guildDetails['guild']['members'] as $item)
+                                @foreach ($guildDetails['guild']['ranks'] as $item)
                                     <div class="card mt-3">
                                         <div class="card-body">
-                                            <h5
-                                                class="card-title
-                                    @if ($item['rank'] == 'Guild Master') text-danger @endif">
-                                                {{ $item['username'] }} - {{ $item['rank'] }}
+                                            <h5 class="card-title">
+                                                {{ $item['name'] }}
                                             </h5>
-                                            <p class="card-text">Joined:
-                                                {{ \Carbon\Carbon::createFromTimestamp($item['joined'] / 1000)->format('d-m-Y h:i:s') }}
+                                            <p class="card-text">Tag: {{ $item['tag'] }}</p>
+                                            <p class="card-text">Creation date:
+                                                {{ \Carbon\Carbon::createFromTimestamp($item['created'] / 1000)->format('d-m-Y h:i:s') }}
                                             </p>
+                                            <p class="card-text">Priority: {{ $item['priority'] }}</p>
                                         </div>
                                     </div>
                                 @endforeach
