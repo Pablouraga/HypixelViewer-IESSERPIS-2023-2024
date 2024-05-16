@@ -1,5 +1,7 @@
 {{-- @dd($serverStats) --}}
-@extends('contentlayout')
+@extends('layouts.general')
+
+@section('title', session('username') . ' - HypixelViewer')
 
 @section('content')
     <div class="container">
