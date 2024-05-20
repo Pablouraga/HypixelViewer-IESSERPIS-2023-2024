@@ -5,10 +5,12 @@
 @section('content')
     <form class="form-inline" action="{{ route('generalView') }}" method="GET">
         @csrf
-        <div class="input-group">
-            <label for="username"></label>
-            <input type="text" name="username" placeholder="Enter player name" class="form-control">
-            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        <div class="container">
+            <div class="input-group">
+                <label for="username"></label>
+                <input type="text" name="username" placeholder="Enter player name" class="form-control">
+                <button type="submit" class="btn btn-outline-secondary">Search</button>
+            </div>
         </div>
     </form>
 
