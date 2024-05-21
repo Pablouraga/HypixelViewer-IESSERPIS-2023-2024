@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class NavigationController extends Controller
 {
+    public function isClaimed(String $username)
+    {
+        if (User::where('linked_account', $username)->exists()) {
+            //Devolver el usuario
+            return User::where('linked_account', $username)->first();
+        }
+        return false;
+    }
     public function findPlayer(Request $request)
     {
         //Api request to https://playerdb.co/api/player/minecraft/$ID
@@ -16,15 +24,11 @@ class NavigationController extends Controller
             $json = file_get_contents($url);
             $data = json_decode($json, true);
         } catch (\Exception $e) {
-            return redirect('/')->with('error', 'Player not found');
+            return redirect('/profile')->with('error', 'Player not found');
         }
 
         //comprobar si algun User tiene el username de la cuenta que se solicita en el campo "linked_account"
-        if (User::where('linked_account', $data['data']['player']['username'])->exists()) {
-            $claimed = true;
-        } else {
-            $claimed = false;
-        }
+        $claimed = $this->isClaimed($data['data']['player']['username']);
 
         session(['username' => $data['data']['player']['username']]);
         session(['uuid' => $data['data']['player']['id']]);
