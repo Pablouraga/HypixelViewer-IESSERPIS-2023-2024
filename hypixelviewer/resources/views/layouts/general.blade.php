@@ -18,7 +18,7 @@
         @include('partials.homeNav')
     @endif
     @yield('content')
-    @yield('footer')
+    @include('partials.footer')
 </body>
 
 </html>
