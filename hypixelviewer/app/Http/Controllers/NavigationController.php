@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class NavigationController extends Controller
@@ -17,9 +18,17 @@ class NavigationController extends Controller
         } catch (\Exception $e) {
             return redirect('/')->with('error', 'Player not found');
         }
+
+        //comprobar si algun User tiene el username de la cuenta que se solicita en el campo "linked_account"
+        if (User::where('linked_account', $data['data']['player']['username'])->exists()) {
+            $claimed = true;
+        } else {
+            $claimed = false;
+        }
+
         session(['username' => $data['data']['player']['username']]);
         session(['uuid' => $data['data']['player']['id']]);
-        return view('generalView', ['user' => $data]);
+        return view('generalView', ['user' => $data, 'claimed' => $claimed]);
     }
 
     public function serverStats()
