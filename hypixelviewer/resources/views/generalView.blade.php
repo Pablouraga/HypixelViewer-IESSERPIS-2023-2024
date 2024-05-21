@@ -4,6 +4,18 @@
 
 @section('content')
     <h1 class="text-center">{{ session('username') }}</h1>
+    @if (Auth::user()->username != session('username'))
+        <div>
+            <form action="#" method="post">
+                @csrf
+                @method('PATCH')
+                {{-- <button type="submit" class="btn btn-warning">Change visibility</button> --}}
+                <input type="image" src="{{ asset('icons/favourited.svg') }}" alt="Add to favourites">
+            </form>
+        </div>
+    @endif
     <img src="https://crafatar.com/avatars/{{ str_replace('-', '', session('uuid')) }}?size=90&overlay" alt="Avatar">
+
+    @dd($claimed)
 
 @endsection
