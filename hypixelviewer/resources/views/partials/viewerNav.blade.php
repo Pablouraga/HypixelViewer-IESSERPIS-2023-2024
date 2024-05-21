@@ -30,7 +30,7 @@
         <ul class="navbar-nav position-absolute end-0 pe-4">
             @auth
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profile') }}">{{ Auth::user()->username }}</a>
+                    <a class="nav-link" href="{{ route('showProfile') }}">{{ Auth::user()->username }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('logout') }}">Logout</a>
