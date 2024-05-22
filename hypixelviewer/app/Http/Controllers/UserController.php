@@ -94,10 +94,11 @@ class UserController extends Controller
             $hypixelUrl = "https://api.hypixel.net/v2/player?key=" . env('HYPIXEL_API_KEY') . "&uuid=" . $data['data']['player']['raw_id'];
             $hypixelJson = file_get_contents($hypixelUrl);
             $hypixelData = json_decode($hypixelJson, true);
+            return view('users.show', ['user' => $user, 'data' => $data, 'hypixelData' => $hypixelData]);
         }
 
 
-        return view('users.show', ['user' => $user, 'data' => $data, 'hypixelData' => $hypixelData]);
+        return view('users.show', ['user' => $user]);
     }
 
     /**
