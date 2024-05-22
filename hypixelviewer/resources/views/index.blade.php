@@ -14,7 +14,7 @@
         </div>
     </form>
 
-    @if (session('error'))
+    {{-- @if (session('error'))
         <p>{{ session('error') }}</p>
-    @endif
+    @endif --}}
 @endsection

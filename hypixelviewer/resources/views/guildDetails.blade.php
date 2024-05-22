@@ -3,7 +3,7 @@
 @section('title', session('username') . ' - HypixelViewer')
 
 @section('content')
-    @dd($guildDetails)
+    {{-- @dd($guildDetails) --}}
     @if ($guildDetails['success'] == true)
         @if ($guildDetails['guild'] == null)
             <div class="container">

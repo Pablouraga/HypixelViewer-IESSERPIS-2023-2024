@@ -16,9 +16,6 @@ Route::get('/auctions/{username}', [NavigationController::class, 'auctionHistory
 Route::get('/skyblock/{username}', [NavigationController::class, 'skyblockStats'])->name('skyblockStats');
 Route::get('/guild/{username}', [NavigationController::class, 'guildDetails'])->name('guildDetails');
 
-//Profile routes
-Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-
 Route::get('/login', function () {
     return view('users.login');
 })->name('loginForm');
@@ -32,3 +29,9 @@ Route::get('/signup', function () {
 Route::post('/signup', [UserController::class, 'signup'])->name('signup');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+Route::get('/edit', [UserController::class, 'edit'])->name('editProfile');
+
+Route::patch('/edit', [UserController::class, 'update'])->name('updateProfile');
+
+Route::get('/profile', [UserController::class, 'show'])->name('showProfile');
