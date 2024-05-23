@@ -3,7 +3,7 @@
 
         <section class="mb-4">
             <p>
-                Found a bug? Report it <a href="" class="text-dark">here!</a>
+                Found a bug? Report it <a href="{{ route('createTicket') }}" class="text-dark">here!</a>
             </p>
         </section>
 
