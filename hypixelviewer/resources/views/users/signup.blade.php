@@ -8,7 +8,7 @@
             <div class="col-md-6">
                 <div class="card mt-3">
                     <div class="card-header">
-                        <h5 class="card-title">Log in!</h5>
+                        <h5 class="card-title">Sign up!</h5>
                         <form method="POST" action="{{ route('signup') }}">
                             @csrf
                             @method('POST')
