@@ -43,4 +43,4 @@ Route::post('/ticket', [TicketController::class, 'store'])->name('storeTicket');
 
 Route::get('/tickets/all', [TicketController::class, 'index'])->name('tickets.index');
 Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
-Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
+Route::delete('/tickets/{ticket}/delete', [TicketController::class, 'destroy'])->name('tickets.destroy');

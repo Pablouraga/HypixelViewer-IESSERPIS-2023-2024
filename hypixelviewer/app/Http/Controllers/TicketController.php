@@ -11,7 +11,9 @@ class TicketController extends Controller
 {
     public function index()
     {
-        //
+        $tickets = Ticket::all();
+
+        return view('backend.ticketsIndex', compact('tickets'));
     }
 
     public function show(Ticket $ticket)
@@ -21,8 +23,8 @@ class TicketController extends Controller
 
     public function destroy(Ticket $ticket)
     {
+        $ticket = Ticket::findorFail($ticket->id);
         $ticket->delete();
-
         return redirect()->route('tickets.index');
     }
 
