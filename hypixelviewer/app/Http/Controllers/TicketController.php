@@ -18,7 +18,10 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket)
     {
-        //
+        $ticket = Ticket::where('id', $ticket->id)->first();
+        $ticket->status = 'Read';
+        $ticket->save();
+        return view('tickets.show', compact('ticket'));
     }
 
     public function destroy(Ticket $ticket)
