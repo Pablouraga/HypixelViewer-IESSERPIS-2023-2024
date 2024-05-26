@@ -43,4 +43,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function favourites()
+    {
+        return $this->belongsToMany(Player::class, 'players_users', 'user_who_adds', 'user_added');
+    }
 }

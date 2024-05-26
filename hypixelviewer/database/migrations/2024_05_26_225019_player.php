@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
-        Schema::create('favourites_user', function (Blueprint $table) {
+        Schema::create('players', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_who_adds')->constrained('users')->onDelete('cascade');;
-            $table->foreignId('user_added')->constrained('users')->onDelete('cascade');;
+            $table->string('username')->onDelete('cascade');
+            $table->string('uuid', 36)->unique();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('favourites_users');
+        Schema::dropIfExists('players');
     }
 };
