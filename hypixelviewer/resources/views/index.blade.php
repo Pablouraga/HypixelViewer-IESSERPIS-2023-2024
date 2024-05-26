@@ -3,7 +3,7 @@
 @section('title', 'Home - HypixelViewer')
 
 @section('content')
-    <form class="form-inline" action="{{ route('generalView') }}" method="GET">
+    <form class="form-inline" action="{{ route('generalView') }}" method="POST">
         @csrf
         <div class="container">
             <div class="input-group">

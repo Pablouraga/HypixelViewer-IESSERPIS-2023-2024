@@ -97,7 +97,6 @@ class UserController extends Controller
             return view('users.show', ['user' => $user, 'data' => $data, 'hypixelData' => $hypixelData]);
         }
 
-
         return view('users.show', ['user' => $user]);
     }
 
