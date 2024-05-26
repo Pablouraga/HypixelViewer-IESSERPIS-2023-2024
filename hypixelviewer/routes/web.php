@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\NavigationController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -11,12 +11,15 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::post('/player', [NavigationController::class, 'findPlayer'])->name('generalView');
-Route::get('/stats/{username}', [NavigationController::class, 'serverStats'])->name('serverStats');
-Route::get('/auctions/{username}', [NavigationController::class, 'auctionHistory'])->name('auctionHistory');
-Route::get('/skyblock/{username}', [NavigationController::class, 'skyblockStats'])->name('skyblockStats');
-Route::get('/guild/{username}', [NavigationController::class, 'guildDetails'])->name('guildDetails');
+//Player routes
+Route::post('/player', [PlayerController::class, 'findPlayer'])->name('generalView');
+Route::get('/stats/{username}', [PlayerController::class, 'serverStats'])->name('serverStats');
+Route::get('/auctions/{username}', [PlayerController::class, 'auctionHistory'])->name('auctionHistory');
+Route::get('/skyblock/{username}', [PlayerController::class, 'skyblockStats'])->name('skyblockStats');
+Route::get('/guild/{username}', [PlayerController::class, 'guildDetails'])->name('guildDetails');
+Route::patch('/player/togglefavourite', [PlayerController::class, 'toggleFavourite'])->name('toggleFavourite');
 
+//Auth routes
 Route::get('/login', function () {
     return view('users.login');
 })->name('loginForm');
@@ -31,12 +34,13 @@ Route::post('/signup', [UserController::class, 'signup'])->name('signup');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
+//User routes
 Route::get('/edit', [UserController::class, 'edit'])->name('editProfile');
-
 Route::patch('/edit', [UserController::class, 'update'])->name('updateProfile');
-
 Route::get('/profile', [UserController::class, 'show'])->name('showProfile');
 
+
+//Ticket routes
 Route::get('/ticket', [TicketController::class, 'create'])->name('createTicket');
 
 Route::post('/ticket', [TicketController::class, 'store'])->name('storeTicket');
