@@ -56,28 +56,22 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function favouriteList(User $user)
     {
-        //
+        $favourites = User::find($user->id)->favourites;
+        return $favourites;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function isFavourited(User $user, $player)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        //Check if the player is in the favourites list, using logged user's ID and player's UUID
+        $favourites = User::find($user->id)->favourites;
+        foreach ($favourites as $favourite) {
+            if ($favourite->uuid == $player) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -149,7 +143,8 @@ class UserController extends Controller
         return redirect()->route('backend.users.index')->with('success', 'User deleted successfully');
     }
 
-    // public function toggleFavourite(User $player)
-    // {
-    // }
+    public function toggleFavourite()
+    {
+        return redirect()->route('/');
+    }
 }
