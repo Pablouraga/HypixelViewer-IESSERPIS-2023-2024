@@ -17,7 +17,7 @@ Route::get('/stats/{username}', [PlayerController::class, 'serverStats'])->name(
 Route::get('/auctions/{username}', [PlayerController::class, 'auctionHistory'])->name('auctionHistory');
 Route::get('/skyblock/{username}', [PlayerController::class, 'skyblockStats'])->name('skyblockStats');
 Route::get('/guild/{username}', [PlayerController::class, 'guildDetails'])->name('guildDetails');
-Route::patch('/player/togglefavourite', [PlayerController::class, 'toggleFavourite'])->name('toggleFavourite');
+// Route::patch('/player/togglefavourite', [PlayerController::class, 'toggleFavourite'])->name('toggleFavourite');
 
 //Auth routes
 Route::get('/login', function () {

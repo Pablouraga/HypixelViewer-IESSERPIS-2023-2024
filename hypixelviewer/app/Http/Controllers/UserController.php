@@ -143,8 +143,16 @@ class UserController extends Controller
         return redirect()->route('backend.users.index')->with('success', 'User deleted successfully');
     }
 
-    public function toggleFavourite()
-    {
-        return redirect()->route('/');
-    }
+    // public function toggleFavourite(Player $player)
+    // {
+    //     $user = User::find(Auth::user()->id);
+    //     $player = Player::find($player->id);
+    //     if (!$player) {
+    //         $player->username = session('username');
+    //         $player->uuid = session('uuid');
+    //         $player->save();
+    //     }
+    //     $user->players()->toggle($player);
+    //     return redirect()->route('index');
+    // }
 }

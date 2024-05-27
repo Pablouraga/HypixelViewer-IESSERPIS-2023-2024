@@ -26,12 +26,12 @@ class PlayerController extends Controller
         session(['uuid' => $data['data']['player']['id']]);
 
         //Find if the logged user has the player as favourite
-        if (Auth::check()) {
-            $userController = new UserController();
-            $user = User::find(Auth::user()->id);
-            $favourites = $userController->isFavourited($user, session('uuid'));
-            return view('player.generalView', ['user' => $data, 'favourites' => $favourites]);
-        }
+        // if (Auth::check()) {
+        //     $userController = new UserController();
+        //     $user = User::find(Auth::user()->id);
+        //     $favourites = $userController->isFavourited($user, session('uuid'));
+        //     return view('player.generalView', ['user' => $data, 'favourites' => $favourites]);
+        // }
 
         //Favourite list
         if (Auth::check()) {
@@ -108,8 +108,28 @@ class PlayerController extends Controller
         return view('player.guildDetails', ['guildDetails' => $data]);
     }
 
-    public function toggleFavourite()
-    {
-        return redirect()->route('/');
-    }
+    // public function toggleFavourite()
+    // {
+    //     $user = User::find(auth()->user()->id);
+    //     $player = Player::where('username', session('username'))->first();
+
+    //     if (!$player) {
+    //         $player = new Player();
+    //         $player->username = session('username');
+    //         $player->uuid = session('uuid');
+    //         $player->save();
+    //     }
+
+    //     //Agregar o eliminar a favoritos
+    //     $user->favourites()->toggle($player->id);
+
+    //     // if ($user->favourites()->where('user_added', $player->uuid)->exists()) {
+    //     //     $user->favourites()->detach($player->id);
+    //     // } else {
+    //     //     $user->favourites()->attach($player->id);
+    //     // }
+
+    //     //Redirigir a la misma pagina
+    //     return redirect()->route('generalView');
+    // }
 }
