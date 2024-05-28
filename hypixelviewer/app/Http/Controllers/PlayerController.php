@@ -10,6 +10,17 @@ use Mockery\CountValidator\AtMost;
 
 class PlayerController extends Controller
 {
+    public function index()
+    {
+        //Reset the username variable stored in the session
+        session(['username' => null]);
+        if (Auth::check()) {
+            $user = auth()->user();
+            $favourites = $user->favourites;
+            return view('index', ['favourites' => $favourites]);
+        }
+        return view('index');
+    }
     public function playerFind(Request $request)
     {
         //Api request to https://playerdb.co/api/player/minecraft/$ID
@@ -52,8 +63,7 @@ class PlayerController extends Controller
     //Check if the player is favourited by the user
     public function isFavourited(User $user, Player $player)
     {
-
-        return $user->favorites()->where('player_id', $player->id)->exists();
+        return $user->favourites()->where('player_id', $player->id)->exists();
     }
 
     //Function to add/remove a player from the user's favourites
@@ -62,9 +72,9 @@ class PlayerController extends Controller
         $player = Player::where('username', session('username'))->first();
         $user = User::find(Auth::user()->id);
         if ($this->isFavourited($user, $player)) {
-            $user->favorites()->detach($player->id);
+            $user->favourites()->detach($player->id);
         } else {
-            $user->favorites()->attach($player->id);
+            $user->favourites()->attach($player->id);
         }
         return redirect()->route('playerShow', ['username' => $player->username]);
     }

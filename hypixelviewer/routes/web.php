@@ -3,13 +3,15 @@
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    //Reiniciamos la variable username almacenada en la sesion
-    session(['username' => null]);
-    return view('index');
-})->name('index');
+// Route::get('/', function () {
+//     //Reiniciamos la variable username almacenada en la sesion
+//     session(['username' => null]);
+//     return view('index');
+// })->name('index');
+Route::get('/', [PlayerController::class, 'index'])->name('index');
 
 //Player routes
 Route::POST('/player', [PlayerController::class, 'playerFind'])->name('playerFind');

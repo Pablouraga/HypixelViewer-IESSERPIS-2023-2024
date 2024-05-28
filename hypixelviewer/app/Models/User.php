@@ -29,7 +29,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function favorites()
+    public function favourites()
     {
         return $this->belongsToMany(Player::class, 'player_user')->withTimestamps();
     }

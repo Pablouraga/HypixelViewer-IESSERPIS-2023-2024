@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-
     // Login function
     public function login(Request $request)
     {
@@ -56,7 +55,7 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    
+
 
     /**
      * Display the specified resource.
