@@ -56,23 +56,7 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function favouriteList(User $user)
-    {
-        $favourites = User::find($user->id)->favourites;
-        return $favourites;
-    }
-
-    public function isFavourited(User $user, $player)
-    {
-        //Check if the player is in the favourites list, using logged user's ID and player's UUID
-        $favourites = User::find($user->id)->favourites;
-        foreach ($favourites as $favourite) {
-            if ($favourite->uuid == $player) {
-                return true;
-            }
-        }
-        return false;
-    }
+    
 
     /**
      * Display the specified resource.
@@ -142,17 +126,4 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('backend.users.index')->with('success', 'User deleted successfully');
     }
-
-    // public function toggleFavourite(Player $player)
-    // {
-    //     $user = User::find(Auth::user()->id);
-    //     $player = Player::find($player->id);
-    //     if (!$player) {
-    //         $player->username = session('username');
-    //         $player->uuid = session('uuid');
-    //         $player->save();
-    //     }
-    //     $user->players()->toggle($player);
-    //     return redirect()->route('index');
-    // }
 }

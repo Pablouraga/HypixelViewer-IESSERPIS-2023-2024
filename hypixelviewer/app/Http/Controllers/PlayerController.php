@@ -10,7 +10,7 @@ use Mockery\CountValidator\AtMost;
 
 class PlayerController extends Controller
 {
-    public function findPlayer(Request $request)
+    public function playerFind(Request $request)
     {
         //Api request to https://playerdb.co/api/player/minecraft/$ID
 
@@ -24,36 +24,49 @@ class PlayerController extends Controller
 
         session(['username' => $data['data']['player']['username']]);
         session(['uuid' => $data['data']['player']['id']]);
-
-
-        //Find if the logged user has the player as favourite
-        // if (Auth::check()) {
-        //     $userController = new UserController();
-        //     $user = User::find(Auth::user()->id);
-        //     $favourites = $userController->isFavourited($user, session('uuid'));
-        //     return view('player.generalView', ['user' => $data, 'favourites' => $favourites]);
-        // }
-
-        //Favourite list
-        // if (Auth::check()) {
-        //     $userController = new UserController();
-        //     $user = User::find(Auth::user()->id);
-        //     $favourites = $userController->favouriteList($user);
-        //     return view('player.generalView', ['user' => $data, 'favourites' => $favourites]);
-        // }
+        if (Player::where('uuid', $data['data']['player']['id'])->exists()) {
+            $player = Player::where('uuid', $data['data']['player']['id'])->first();
+        } else {
+            $player = new Player();
+            $player->username = $data['data']['player']['username'];
+            $player->uuid = $data['data']['player']['id'];
+            $player->save();
+        }
 
         //Call to show method
-        return $this->show($data);
-    }
-    
-    public function show(Array $player){
-        return view('player.generalView', ['player' => $player]);
+        return redirect()->route('playerShow', ['username' => $player->username]);
     }
 
-    public function findFavourites(User $user)
+    public function show(Player $player)
     {
-        $favourites = Player::where('user_who_adds', $user->id)->get();
-        return $favourites;
+        // Find if the logged user has the player as favourite
+        $favourites = false;
+        $player = Player::where('username', session('username'))->first();
+        if (Auth::check()) {
+            $user = User::find(Auth::user()->id);
+            $favourites = $this->isFavourited($user, $player);
+        }
+        return view('player.generalView', ['player' => $player, 'favourites' => $favourites]);
+    }
+
+    //Check if the player is favourited by the user
+    public function isFavourited(User $user, Player $player)
+    {
+
+        return $user->favorites()->where('player_id', $player->id)->exists();
+    }
+
+    //Function to add/remove a player from the user's favourites
+    public function togglefavourite(Player $player)
+    {
+        $player = Player::where('username', session('username'))->first();
+        $user = User::find(Auth::user()->id);
+        if ($this->isFavourited($user, $player)) {
+            $user->favorites()->detach($player->id);
+        } else {
+            $user->favorites()->attach($player->id);
+        }
+        return redirect()->route('playerShow', ['username' => $player->username]);
     }
 
     public function serverStats()
@@ -114,29 +127,4 @@ class PlayerController extends Controller
         $data = json_decode($json, true);
         return view('player.guildDetails', ['guildDetails' => $data]);
     }
-
-    // public function toggleFavourite()
-    // {
-    //     $user = User::find(auth()->user()->id);
-    //     $player = Player::where('username', session('username'))->first();
-
-    //     if (!$player) {
-    //         $player = new Player();
-    //         $player->username = session('username');
-    //         $player->uuid = session('uuid');
-    //         $player->save();
-    //     }
-
-    //     //Agregar o eliminar a favoritos
-    //     $user->favourites()->toggle($player->id);
-
-    //     // if ($user->favourites()->where('user_added', $player->uuid)->exists()) {
-    //     //     $user->favourites()->detach($player->id);
-    //     // } else {
-    //     //     $user->favourites()->attach($player->id);
-    //     // }
-
-    //     //Redirigir a la misma pagina
-    //     return redirect()->route('generalView');
-    // }
 }

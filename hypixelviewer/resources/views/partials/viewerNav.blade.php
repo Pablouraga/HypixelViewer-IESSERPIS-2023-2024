@@ -17,7 +17,7 @@
                 <a class="nav-link" href="{{ route('guildDetails', session('username')) }}">Guild Details</a>
             </li>
             <li class="nav-item ml-auto">
-                <form class="form-inline" action="{{ route('generalView') }}" method="POST">
+                <form class="form-inline" action="{{ route('playerFind') }}" method="POST">
                     @csrf
                     <div class="input-group">
                         <label for="username"></label>

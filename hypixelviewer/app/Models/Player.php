@@ -14,8 +14,8 @@ class Player extends Model
         'uuid',
     ];
 
-    public function users()
+    public function favorites()
     {
-        return $this->belongsToMany(User::class, 'players_users', 'user_added', 'user_who_adds');
+        return $this->belongsToMany(User::class, 'player_user')->withTimestamps();
     }
 }

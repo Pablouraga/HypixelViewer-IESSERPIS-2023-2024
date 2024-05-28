@@ -12,13 +12,13 @@ Route::get('/', function () {
 })->name('index');
 
 //Player routes
-Route::post('/player', [PlayerController::class, 'findPlayer'])->name('generalView');
-Route::post('/player/{username}', [PlayerController::class, 'show'])->name('player.show');
+Route::POST('/player', [PlayerController::class, 'playerFind'])->name('playerFind');
+Route::get('/player/{username}', [PlayerController::class, 'show'])->name('playerShow');
 Route::get('/stats/{username}', [PlayerController::class, 'serverStats'])->name('serverStats');
 Route::get('/auctions/{username}', [PlayerController::class, 'auctionHistory'])->name('auctionHistory');
 Route::get('/skyblock/{username}', [PlayerController::class, 'skyblockStats'])->name('skyblockStats');
 Route::get('/guild/{username}', [PlayerController::class, 'guildDetails'])->name('guildDetails');
-// Route::patch('/player/togglefavourite', [PlayerController::class, 'toggleFavourite'])->name('toggleFavourite');
+Route::patch('/player/togglefavourite', [PlayerController::class, 'toggleFavourite'])->name('toggleFavourite');
 
 //Auth routes
 Route::get('/login', function () {

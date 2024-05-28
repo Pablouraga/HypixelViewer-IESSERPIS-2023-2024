@@ -11,31 +11,16 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'username',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [
@@ -44,9 +29,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function favourites()
+    public function favorites()
     {
-        return $this->belongsToMany(Player::class, 'players_users', 'user_who_adds', 'user_added');
+        return $this->belongsToMany(Player::class, 'player_user')->withTimestamps();
     }
 
     public function sender()
