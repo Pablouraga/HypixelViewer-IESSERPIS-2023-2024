@@ -6,8 +6,8 @@
     <h1 class="text-center">{{ session('username') }}</h1>
     @auth
         {{-- Icono que al pulsar ejecute la funcion toggleFavourite() dentro de PlayerController --}}
-        <div>
-            {{-- <form action="{{ route('toggleFavourite') }}" method="post">
+        {{-- <div> --}}
+        {{-- <form action="{{ route('toggleFavourite') }}" method="post">
                 @csrf
                 @method('PATCH')
                 @if ($favourites)
@@ -18,7 +18,12 @@
                     <button type="submit" class="btn btn-success">Add to favourites</button>
                 @endif
             </form> --}}
-        </div>
+        {{-- </div> --}}
+
+        {{-- Enviar solicitud de amistad / enviar mensaje --}}
+        {{-- <div>
+            
+        </div> --}}
     @endauth
     <img src="https://crafatar.com/avatars/{{ str_replace('-', '', session('uuid')) }}?size=90&overlay" alt="Avatar">
 
