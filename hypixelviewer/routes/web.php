@@ -13,6 +13,7 @@ Route::get('/', function () {
 
 //Player routes
 Route::post('/player', [PlayerController::class, 'findPlayer'])->name('generalView');
+Route::post('/player/{username}', [PlayerController::class, 'show'])->name('player.show');
 Route::get('/stats/{username}', [PlayerController::class, 'serverStats'])->name('serverStats');
 Route::get('/auctions/{username}', [PlayerController::class, 'auctionHistory'])->name('auctionHistory');
 Route::get('/skyblock/{username}', [PlayerController::class, 'skyblockStats'])->name('skyblockStats');

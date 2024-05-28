@@ -10,7 +10,7 @@ use Mockery\CountValidator\AtMost;
 
 class PlayerController extends Controller
 {
-    public function findPlayer(Request $request, String $username)
+    public function findPlayer(Request $request)
     {
         //Api request to https://playerdb.co/api/player/minecraft/$ID
 
@@ -25,6 +25,7 @@ class PlayerController extends Controller
         session(['username' => $data['data']['player']['username']]);
         session(['uuid' => $data['data']['player']['id']]);
 
+
         //Find if the logged user has the player as favourite
         // if (Auth::check()) {
         //     $userController = new UserController();
@@ -34,13 +35,19 @@ class PlayerController extends Controller
         // }
 
         //Favourite list
-        if (Auth::check()) {
-            $userController = new UserController();
-            $user = User::find(Auth::user()->id);
-            $favourites = $userController->favouriteList($user);
-            return view('player.generalView', ['user' => $data, 'favourites' => $favourites]);
-        }
-        return view('player.generalView', ['user' => $data]);
+        // if (Auth::check()) {
+        //     $userController = new UserController();
+        //     $user = User::find(Auth::user()->id);
+        //     $favourites = $userController->favouriteList($user);
+        //     return view('player.generalView', ['user' => $data, 'favourites' => $favourites]);
+        // }
+
+        //Call to show method
+        return $this->show($data);
+    }
+    
+    public function show(Array $player){
+        return view('player.generalView', ['player' => $player]);
     }
 
     public function findFavourites(User $user)
