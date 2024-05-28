@@ -10,7 +10,7 @@ use Mockery\CountValidator\AtMost;
 
 class PlayerController extends Controller
 {
-    public function findPlayer(Request $request)
+    public function findPlayer(Request $request, String $username)
     {
         //Api request to https://playerdb.co/api/player/minecraft/$ID
 
