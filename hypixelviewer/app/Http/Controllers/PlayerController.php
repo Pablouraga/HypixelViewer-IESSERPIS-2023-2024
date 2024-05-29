@@ -10,17 +10,6 @@ use Mockery\CountValidator\AtMost;
 
 class PlayerController extends Controller
 {
-    public function index()
-    {
-        //Reset the username variable stored in the session
-        session(['username' => null]);
-        if (Auth::check()) {
-            $user = auth()->user();
-            $favourites = $user->favourites;
-            return view('index', ['favourites' => $favourites]);
-        }
-        return view('index');
-    }
     public function playerFind(Request $request)
     {
         //Api request to https://playerdb.co/api/player/minecraft/$ID
@@ -57,6 +46,10 @@ class PlayerController extends Controller
             $user = User::find(Auth::user()->id);
             $favourites = $this->isFavourited($user, $player);
         }
+        $linked_account = $this->hasLinkedAccount($player->username);
+        if ($linked_account != null) {
+            return view('player.generalView', ['player' => $player, 'favourites' => $favourites, 'linked_account' => $linked_account]);
+        }
         return view('player.generalView', ['player' => $player, 'favourites' => $favourites]);
     }
 
@@ -77,6 +70,11 @@ class PlayerController extends Controller
             $user->favourites()->attach($player->id);
         }
         return redirect()->route('playerShow', ['username' => $player->username]);
+    }
+
+    public function hasLinkedAccount(String $username)
+    {
+        return User::where('linked_account', $username)->first();
     }
 
     public function serverStats()
