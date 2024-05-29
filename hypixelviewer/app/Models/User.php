@@ -15,6 +15,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'linked_account',
     ];
 
     protected $hidden = [
@@ -32,6 +33,11 @@ class User extends Authenticatable
     public function favourites()
     {
         return $this->belongsToMany(Player::class, 'player_user')->withTimestamps();
+    }
+
+    public function friends()
+    {
+        return $this->belongsToMany(User::class, 'friend_user', 'sender', 'receiver')->withTimestamps();
     }
 
     public function sender()
