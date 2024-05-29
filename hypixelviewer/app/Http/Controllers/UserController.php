@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EditAccountRequest;
+use App\Models\Player;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,13 +69,23 @@ class UserController extends Controller
             $json = file_get_contents($url);
             $data = json_decode($json, true);
 
-            $hypixelUrl = "https://api.hypixel.net/v2/player?key=" . env('HYPIXEL_API_KEY') . "&uuid=" . $data['data']['player']['raw_id'];
+            $hypixelUrl = "https://api.hypixel.net/v2/player?key=" . env('HYPIXEL_API_KEY') . "&uuid=" . $data['data']['player']['id'];
             $hypixelJson = file_get_contents($hypixelUrl);
             $hypixelData = json_decode($hypixelJson, true);
             return view('users.show', ['user' => $user, 'data' => $data, 'hypixelData' => $hypixelData]);
         }
 
         return view('users.show', ['user' => $user]);
+    }
+
+    public function addUserAsFriend()
+    {
+        //Authenticated user
+        $loggedUser = User::where('username', Auth::user()->username)->first();
+        $player = Player::where('username', session('username'))->first();
+        $desiredFriend = User::find($player->id);
+        $loggedUser->friends()->attach($desiredFriend);
+        return redirect()->route('playerShow', ['username' => $player->username]);
     }
 
     /**
