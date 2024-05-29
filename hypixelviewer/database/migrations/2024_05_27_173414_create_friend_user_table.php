@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('sender');
             $table->unsignedBigInteger('receiver');
+            $table->enum('status', ['Pending', 'Accepted'])->default('Pending');
             $table->timestamps();
 
             //Foreign keys

@@ -23,6 +23,7 @@
         {{-- Jugador que tiene la cuenta enlazada --}}
         @isset($linked_account->linked_account)
             @if ($linked_account->username != Auth::user()->username)
+                {{-- Enviar solicitud de amistad / enviar mensaje --}}
                 <div>
                     <form action="{{ route('addUser') }}" method="post">
                         @csrf
@@ -30,11 +31,9 @@
                         <input type="hidden" name="friend" value="0">
                         <button type="submit" class="btn btn-warning">Add as friend</button>
                     </form>
-                    {{-- {{ $linked_account->username }} --}}
                 </div>
-            @endif
-        @endisset
-        {{-- Enviar solicitud de amistad / enviar mensaje --}}
+            @endisset
+        @endif
     @endauth
     @isset($request)
         @dd($request)
