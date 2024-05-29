@@ -6,12 +6,17 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     //Reiniciamos la variable username almacenada en la sesion
-//     session(['username' => null]);
-//     return view('index');
-// })->name('index');
-Route::get('/', [PlayerController::class, 'index'])->name('index');
+Route::get('/', function () {
+    //Reiniciamos la variable username almacenada en la sesion
+    session(['username' => null]);
+    if (Auth::check()) {
+        $user = auth()->user();
+        $favourites = $user->favourites;
+        return view('index', ['favourites' => $favourites]);
+    }
+    return view('index');
+})->name('index');
+// Route::get('/', [PlayerController::class, 'index'])->name('index');
 
 //Player routes
 Route::POST('/player', [PlayerController::class, 'playerFind'])->name('playerFind');
@@ -42,6 +47,7 @@ Route::get('/edit', [UserController::class, 'edit'])->name('editProfile');
 Route::patch('/edit', [UserController::class, 'update'])->name('updateProfile');
 Route::get('/profile', [UserController::class, 'show'])->name('showProfile');
 
+Route::post('/player/add', [UserController::class, 'addUserAsFriend'])->name('addUser');
 
 //Ticket routes
 Route::get('/ticket', [TicketController::class, 'create'])->name('createTicket');
