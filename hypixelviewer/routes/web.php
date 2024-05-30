@@ -46,8 +46,10 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/edit', [UserController::class, 'edit'])->name('editProfile');
 Route::patch('/edit', [UserController::class, 'update'])->name('updateProfile');
 Route::get('/profile', [UserController::class, 'show'])->name('showProfile');
-
 Route::post('/player/add', [UserController::class, 'addUserAsFriend'])->name('addUser');
+Route::get('/friends', [UserController::class, 'friendList'])->name('friendList');
+Route::post('/friends/accept/{sender}/{receiver}', [UserController::class, 'acceptFriendRequest'])->name('acceptFriendRequest');
+Route::delete('/friends/reject/{sender}/{receiver}', [UserController::class, 'rejectFriendRequest'])->name('rejectFriendRequest');
 
 //Ticket routes
 Route::get('/ticket', [TicketController::class, 'create'])->name('createTicket');
