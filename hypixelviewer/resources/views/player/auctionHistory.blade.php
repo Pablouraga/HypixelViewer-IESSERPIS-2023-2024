@@ -6,11 +6,13 @@
     <div class="container mt-3">
         <div class="section-buttons row">
             {{-- Dos botones, uno para mostrar auctions y otro para mostrar bids, que ocupen los dos todo el espacio de la clase padre y que sean del mismo tamaño --}}
-            <button class="btn btn-primary col mx-3" onclick="showAuctions()">Auctions</button>
-            <button class="btn btn-primary col mx-3" onclick="showBids()">Bids</button>
+            <button class="btn btn-primary col mx-3 auction-history-btn"
+                onclick="showContent('auction-history')">Auctions</button>
+            <button class="btn btn-outline-primary col mx-3 bid-history-btn"
+                onclick="showContent('bid-history')">Bids</button>
         </div>
 
-        <div class="card auction-history mt-3">
+        <div class="card mt-3 d-block" id="auction-history">
             <div class="card-body">
                 <h5 class="card-title">Auction History</h5>
                 <table class="table table-striped">
@@ -42,7 +44,7 @@
             </div>
         </div>
 
-        <div class="card bid-history mt-3">
+        <div class="card mt-3 d-none" id="bid-history">
             <div class="card-body">
                 <h5 class="card-title">Bid History</h5>
                 <table class="table table-striped">
@@ -74,5 +76,35 @@
             </div>
         </div>
     </div>
-    {{-- @dd($bidsData) --}}
 @endsection
+
+<script>
+    function showContent(section) {
+        console.log(section)
+        // Oculta todos los contenidos
+        document.getElementById('auction-history').classList.add('d-none');
+        document.getElementById('bid-history').classList.add('d-none');
+
+        //get element by class name
+        var auctionHistoryBtn = document.getElementsByClassName('auction-history-btn');
+        var bidHistoryBtn = document.getElementsByClassName('bid-history-btn');
+
+        if (section == 'auction-history') {
+            // Muestra solo el contenido de la sección seleccionada
+            auctionHistoryBtn[0].classList.remove('btn-outline-primary');
+            auctionHistoryBtn[0].classList.add('btn-primary');
+            bidHistoryBtn[0].classList.remove('btn-primary');
+            bidHistoryBtn[0].classList.add('btn-outline-primary');
+        } else {
+            // Muestra solo el contenido de la sección seleccionada
+            bidHistoryBtn[0].classList.remove('btn-outline-primary');
+            bidHistoryBtn[0].classList.add('btn-primary');
+            auctionHistoryBtn[0].classList.remove('btn-primary');
+            auctionHistoryBtn[0].classList.add('btn-outline-primary');
+        }
+
+        // Muestra solo el contenido de la sección seleccionada
+        document.getElementById(section).classList.remove('d-none');
+        document.getElementById(section).classList.add('d-block');
+    }
+</script>
