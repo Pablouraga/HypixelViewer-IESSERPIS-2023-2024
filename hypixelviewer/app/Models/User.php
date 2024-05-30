@@ -37,7 +37,7 @@ class User extends Authenticatable
 
     public function friends()
     {
-        return $this->belongsToMany(User::class, 'friend_user', 'sender', 'receiver')->withTimestamps();
+        return $this->belongsToMany(User::class, 'friend_user', 'sender', 'receiver')->withPivot('status')->withTimestamps();
     }
 
     public function sender()
