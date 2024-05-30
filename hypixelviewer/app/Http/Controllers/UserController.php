@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EditAccountRequest;
+use App\Models\FriendUser;
 use App\Models\Player;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -84,6 +85,14 @@ class UserController extends Controller
         $loggedUser = User::where('username', Auth::user()->username)->first();
         $player = Player::where('username', session('username'))->first();
         $desiredFriend = User::find($player->id);
+        //Check if the desired user sent a friend request
+        $friendRequest = FriendUser::where('sender', $desiredFriend->id)->where('receiver', $loggedUser->id)->first();
+        if ($friendRequest) {
+            $friendRequest->status = 'accepted';
+            $friendRequest->save();
+            return redirect()->route('playerShow', ['username' => $player->username]);
+        }
+
         $loggedUser->friends()->attach($desiredFriend);
         return redirect()->route('playerShow', ['username' => $player->username]);
     }
@@ -135,5 +144,43 @@ class UserController extends Controller
         $user = User::findOrfail($user->id);
         $user->delete();
         return redirect()->route('backend.users.index')->with('success', 'User deleted successfully');
+    }
+
+    public function friendList()
+    {
+        // Obtener el usuario autenticado
+        $user = User::where('username', Auth::user()->username)->first();
+
+        $friends = FriendUser::where('sender', $user->id)
+            ->orWhere('receiver', $user->id)
+            ->get();
+
+        //Get friend's
+        foreach ($friends as $key => $friend) {
+            $friend->username = User::find($friend->sender == $user->id ? $friend->receiver : $friend->sender)->username;
+        }
+
+        // Pasar los resultados a la vista
+        return view('users.friendlist', [
+            'friends' => $friends
+        ]);
+    }
+    public function acceptFriendRequest($sender, $receiver)
+    {
+        $sender = User::find($sender);
+        $receiver = User::find($receiver);
+        $friendRequest = FriendUser::where('sender', $sender->id)->where('receiver', $receiver->id)->first();
+        $friendRequest->status = 'accepted';
+        $friendRequest->save();
+        return redirect()->route('friendList');
+    }
+
+    public function rejectFriendRequest($sender, $receiver)
+    {
+        $sender = User::find($sender);
+        $receiver = User::find($receiver);
+        $friendRequest = FriendUser::where('sender', $sender->id)->where('receiver', $receiver->id)->first();
+        $friendRequest->delete();
+        return redirect()->route('friendList');
     }
 }

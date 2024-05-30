@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FriendUser;
 use App\Models\Player;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,13 +43,17 @@ class PlayerController extends Controller
         // Find if the logged user has the player as favourite
         $favourites = false;
         $player = Player::where('username', session('username'))->first();
+        $linked_account = $this->hasLinkedAccount($player->username);
         if (Auth::check()) {
             $user = User::find(Auth::user()->id);
             $favourites = $this->isFavourited($user, $player);
         }
-        $linked_account = $this->hasLinkedAccount($player->username);
-        if ($linked_account != null) {
-            return view('player.generalView', ['player' => $player, 'favourites' => $favourites, 'linked_account' => $linked_account]);
+        // if ($linked_account != null) {
+        //     return view('player.generalView', ['player' => $player, 'favourites' => $favourites, 'linked_account' => $linked_account]);
+        // }
+        if (Auth::check() && $linked_account != null) {
+            $friendshipStatus = $this->friendStatus();
+            return view('player.generalView', ['player' => $player, 'favourites' => $favourites, 'linked_account' => $linked_account, 'friendshipStatus' => $friendshipStatus]);
         }
         return view('player.generalView', ['player' => $player, 'favourites' => $favourites]);
     }
@@ -57,6 +62,23 @@ class PlayerController extends Controller
     public function isFavourited(User $user, Player $player)
     {
         return $user->favourites()->where('player_id', $player->id)->exists();
+    }
+
+    public function friendStatus()
+    {
+        $loggedUser = User::where('username', Auth::user()->username)->first();
+        $player = Player::where('username', session('username'))->first();
+        $desiredFriend = User::find($player->id);
+        $friendship = FriendUser::where(function ($query) use ($desiredFriend, $loggedUser) {
+            $query->where('sender', $desiredFriend->id)
+                ->orWhere('sender', $loggedUser->id);
+        })
+            ->where('receiver', $loggedUser->id)
+            ->orWhere('receiver', $desiredFriend->id)
+            ->first();
+        if ($friendship) {
+            return $friendship->status;
+        }
     }
 
     //Function to add/remove a player from the user's favourites
