@@ -160,9 +160,21 @@ class UserController extends Controller
             $friend->username = User::find($friend->sender == $user->id ? $friend->receiver : $friend->sender)->username;
         }
 
+        $acceptedRequests = $friends->filter(function ($friend) {
+            return $friend->status == 'Accepted';
+        });
+
+        $pendingFriendReceived = $friends->filter(function ($friend) use ($user) {
+            return $friend->status == 'Pending' && $friend->receiver == $user->id;
+        });
+
+        $pendingFriendSent = $friends->filter(function ($friend) use ($user) {
+            return $friend->status == 'Pending' && $friend->sender == $user->id;
+        });
+
         // Pasar los resultados a la vista
         return view('users.friendlist', [
-            'friends' => $friends
+            'acceptedRequests' => $acceptedRequests, 'pendingFriendReceived' => $pendingFriendReceived, 'pendingFriendSent' => $pendingFriendSent
         ]);
     }
     public function acceptFriendRequest($sender, $receiver)
@@ -176,6 +188,15 @@ class UserController extends Controller
     }
 
     public function rejectFriendRequest($sender, $receiver)
+    {
+        $sender = User::find($sender);
+        $receiver = User::find($receiver);
+        $friendRequest = FriendUser::where('sender', $sender->id)->where('receiver', $receiver->id)->first();
+        $friendRequest->delete();
+        return redirect()->route('friendList');
+    }
+
+    public function deleteFriend($sender, $receiver)
     {
         $sender = User::find($sender);
         $receiver = User::find($receiver);

@@ -50,6 +50,7 @@ Route::post('/player/add', [UserController::class, 'addUserAsFriend'])->name('ad
 Route::get('/friends', [UserController::class, 'friendList'])->name('friendList');
 Route::post('/friends/accept/{sender}/{receiver}', [UserController::class, 'acceptFriendRequest'])->name('acceptFriendRequest');
 Route::delete('/friends/reject/{sender}/{receiver}', [UserController::class, 'rejectFriendRequest'])->name('rejectFriendRequest');
+Route::delete('/friends/delete/{sender}/{receiver}', [UserController::class, 'deleteFriend'])->name('deleteFriend');
 
 //Ticket routes
 Route::get('/ticket', [TicketController::class, 'create'])->name('createTicket');

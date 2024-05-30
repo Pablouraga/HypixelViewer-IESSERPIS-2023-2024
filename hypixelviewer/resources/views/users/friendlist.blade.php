@@ -4,19 +4,18 @@
 
 @section('content')
     <div class="container">
-        <h1 class="text-center">{{ Auth::user()->username }}</h1>
+        <h1 class="text-center mt-3">{{ Auth::user()->username }}</h1>
 
         {{-- Received friends --}}
-        <div class="section-buttons row">
-            {{-- Dos botones, uno para mostrar auctions y otro para mostrar bids, que ocupen los dos todo el espacio de la clase padre y que sean del mismo tamaño --}}
-            <button class="btn btn-primary col mx-3" onclick="">Friends</button>
-            <button class="btn btn-primary col mx-3" onclick="">Received requests</button>
-            <button class="btn btn-primary col mx-3" onclick="">Sent requests</button>
+        <div class="section-buttons row mt-5">
+            <button class="btn btn-primary col mx-3" onclick="showContent('accepted-container')">Friends</button>
+            <button class="btn btn-primary col mx-3" onclick="showContent('received-container')">Received requests</button>
+            <button class="btn btn-primary col mx-3" onclick="showContent('sent-container')">Sent requests</button>
         </div>
 
-        {{-- Current friends --}}
-        @foreach ($friends as $friend)
-            @if ($friend->status == 'Accepted')
+        {{-- Accepted requests --}}
+        <div id="accepted-container" class="d-block">
+            @if ($acceptedRequests->isNotEmpty())
                 <div class="card friends mt-3">
                     <div class="card-body">
                         <h5 class="card-title">Friends</h5>
@@ -29,12 +28,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($friends as $friend)
+                                @foreach ($acceptedRequests as $friend)
                                     <tr>
                                         <td>{{ $friend->username }}</td>
                                         <td>Link to profile</td>
                                         <td>
-                                            <form action="#" method="post">
+                                            <form
+                                                action="{{ route('deleteFriend', ['sender' => $friend->sender, 'receiver' => $friend->receiver]) }}"
+                                                method="post">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -54,105 +55,107 @@
                     </div>
                 </div>
             @else
-                @if ($friend->receiver == Auth::user()->id)
-                    <div class="card friends mt-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Received requests</h5>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Player</th>
-                                        <th scope="col">Show profile</th>
-                                        <th scope="col">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($friends as $friend)
-                                        <tr>
-                                            <td>{{ $friend->username }}</td>
-                                            <td>Link to profile</td>
-                                            <td>
-                                                <form
-                                                    action="{{ route('acceptFriendRequest', ['sender' => $friend->sender, 'receiver' => $friend->receiver]) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('POST')
-                                                    <button type="submit" class="btn btn-primary">Accept</button>
-                                                </form>
-                                                <form
-                                                    action="{{ route('rejectFriendRequest', ['sender' => $friend->sender, 'receiver' => $friend->receiver]) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Decline</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                @else
-                    <div class="card friends mt-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Sent requests</h5>
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Player</th>
-                                        <th scope="col">Show profile</th>
-                                        <th scope="col">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($friends as $friend)
-                                        <tr>
-                                            <td>{{ $friend->username }}</td>
-                                            <td>Link to profile</td>
-                                            <td>
-                                                <form
-                                                    action="{{ route('rejectFriendRequest', ['sender' => $friend->sender, 'receiver' => $friend->receiver]) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Cancel friend
-                                                        request</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                @endif
+                No tienes amigos
             @endif
-        @endforeach
+        </div>
 
-        {{-- Received requests --}}
-
-        {{-- <form action="{{ route('addUser') }}" method="post">
-            @csrf
-            @method('POST')
-            <input type="hidden" name="friend" value="0">
-            <button type="submit" class="btn btn-warning">Add as friend</button>
-        </form> --}}
-
-        {{-- Sent requests --}}
-
-        {{-- @foreach ($friends as $friend)
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Sender - {{ $friend->sender }}</h5>
-                    <p class="card-text">Receiver - {{ $friend->receiver }}</p>
-                    @if ($friend->status == 'pending')
-                        <a href="{{ route('friend.accept', ['id' => $friend->id]) }}" class="btn btn-primary">Accept</a>
-                        <a href="{{ route('friend.decline', ['id' => $friend->id]) }}" class="btn btn-danger">Decline</a>
-                    @endif
-                    <p class="card-text">{{ $friend->status }}</p>
+        <div id="received-container" class="d-none">
+            @if ($pendingFriendReceived->isNotEmpty())
+                <div class="card friends mt-3">
+                    {{-- Pending requests --}}
+                    <div class="card-body">
+                        <h5 class="card-title">Received requests</h5>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Player</th>
+                                    <th scope="col">Show profile</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pendingFriendReceived as $friend)
+                                    <tr>
+                                        <td>{{ $friend->username }}</td>
+                                        <td>Link to profile</td>
+                                        <td>
+                                            <form
+                                                action="{{ route('acceptFriendRequest', ['sender' => $friend->sender, 'receiver' => $friend->receiver]) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('POST')
+                                                <button type="submit" class="btn btn-primary">Accept</button>
+                                            </form>
+                                            <form
+                                                action="{{ route('rejectFriendRequest', ['sender' => $friend->sender, 'receiver' => $friend->receiver]) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Decline</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
-        @endforeach --}}
+            @else
+                No has recibido solicitudes de amistad
+            @endif
+        </div>
+
+        <div id="sent-container" class="d-none">
+            @if ($pendingFriendSent->isNotEmpty())
+                <div class="card friends mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Sent requests</h5>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Player</th>
+                                    <th scope="col">Show profile</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pendingFriendSent as $friend)
+                                    <tr>
+                                        <td>{{ $friend->username }}</td>
+                                        <td>Link to profile</td>
+                                        <td>
+                                            <form
+                                                action="{{ route('rejectFriendRequest', ['sender' => $friend->sender, 'receiver' => $friend->receiver]) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Cancel friend
+                                                    request</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @else
+                No has enviado solicitudes de amistad
+            @endif
+        </div>
     </div>
 @endsection
+
+<script>
+    function showContent(section) {
+        console.log(section)
+        // Oculta todos los contenidos
+        document.getElementById('accepted-container').classList.add('d-none');
+        document.getElementById('received-container').classList.add('d-none');
+        document.getElementById('sent-container').classList.add('d-none');
+
+        // Muestra solo el contenido de la sección seleccionada
+        document.getElementById(section).classList.remove('d-none');
+        document.getElementById(section).classList.add('d-block');
+    }
+</script>
