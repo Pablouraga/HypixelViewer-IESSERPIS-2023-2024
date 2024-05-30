@@ -25,19 +25,22 @@
             @if ($linked_account->username != Auth::user()->username)
                 {{-- Enviar solicitud de amistad / enviar mensaje --}}
                 <div>
-                    <form action="{{ route('addUser') }}" method="post">
-                        @csrf
-                        @method('POST')
-                        <input type="hidden" name="friend" value="0">
-                        <button type="submit" class="btn btn-warning">Add as friend</button>
-                    </form>
+                    @if ($friendshipStatus == 'Accepted')
+                        <form action="#" method="get">
+                            <button type="submit" class="btn btn-primary">Send message</button>
+                        </form>
+                    @else
+                        <form action="{{ route('addUser') }}" method="post">
+                            @csrf
+                            @method('POST')
+                            <input type="hidden" name="friend" value="0">
+                            <button type="submit" class="btn btn-warning">Add as friend</button>
+                        </form>
+                    @endif
                 </div>
             @endisset
         @endif
     @endauth
-    @isset($request)
-        @dd($request)
-    @endisset
     <img src="https://crafatar.com/avatars/{{ str_replace('-', '', session('uuid')) }}?size=90&overlay" alt="Avatar">
 
 @endsection
