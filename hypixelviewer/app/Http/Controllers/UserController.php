@@ -90,18 +90,18 @@ class UserController extends Controller
     {
         //Authenticated user
         $loggedUser = User::where('username', Auth::user()->username)->first();
-        $player = Player::where('username', session('username'))->first();
-        $desiredFriend = User::find($player->id);
+        // $player = Player::where('username', session('username'))->first();
+        $desiredFriend = User::where('linked_account', session('username'))->first();
         //Check if the desired user sent a friend request
         $friendRequest = FriendUser::where('sender', $desiredFriend->id)->where('receiver', $loggedUser->id)->first();
         if ($friendRequest) {
             $friendRequest->status = 'accepted';
             $friendRequest->save();
-            return redirect()->route('playerShow', ['username' => $player->username]);
+            return redirect()->route('playerShow', ['username' => $desiredFriend->linked_account]);
         }
 
         $loggedUser->friends()->attach($desiredFriend);
-        return redirect()->route('playerShow', ['username' => $player->username]);
+        return redirect()->route('playerShow', ['username' => $desiredFriend->linked_account]);
     }
 
     /**

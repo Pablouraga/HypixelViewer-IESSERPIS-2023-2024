@@ -66,18 +66,20 @@ class PlayerController extends Controller
 
     public function friendStatus()
     {
-        $loggedUser = User::where('username', Auth::user()->username)->first();
-        $player = Player::where('username', session('username'))->first();
-        $desiredFriend = User::find($player->id);
-        $friendship = FriendUser::where(function ($query) use ($desiredFriend, $loggedUser) {
-            $query->where('sender', $desiredFriend->id)
-                ->orWhere('sender', $loggedUser->id);
-        })
-            ->where('receiver', $loggedUser->id)
-            ->orWhere('receiver', $desiredFriend->id)
-            ->first();
-        if ($friendship) {
-            return $friendship->status;
+        if (Auth::user()->username == session('username')) {
+            $loggedUser = User::where('username', Auth::user()->username)->first();
+            $player = Player::where('username', session('username'))->first();
+            $desiredFriend = User::find($player->id);
+            $friendship = FriendUser::where(function ($query) use ($desiredFriend, $loggedUser) {
+                $query->where('sender', $desiredFriend->id)
+                    ->where('receiver', $loggedUser->id);
+            })->orWhere(function ($query) use ($desiredFriend, $loggedUser) {
+                $query->where('sender', $loggedUser->id)
+                    ->where('receiver', $desiredFriend->id);
+            })->first();
+            if ($friendship) {
+                return $friendship->status;
+            }
         }
     }
 
