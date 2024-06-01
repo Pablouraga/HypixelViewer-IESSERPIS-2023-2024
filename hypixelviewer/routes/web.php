@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\TextController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +52,9 @@ Route::get('/friends', [UserController::class, 'friendList'])->name('friendList'
 Route::post('/friends/accept/{sender}/{receiver}', [UserController::class, 'acceptFriendRequest'])->name('acceptFriendRequest');
 Route::delete('/friends/reject/{sender}/{receiver}', [UserController::class, 'rejectFriendRequest'])->name('rejectFriendRequest');
 Route::delete('/friends/delete/{sender}/{receiver}', [UserController::class, 'deleteFriend'])->name('deleteFriend');
+
+//Message routes
+Route::get('/messages', [TextController::class, 'index'])->name('messageList');
 
 //Ticket routes
 Route::get('/ticket', [TicketController::class, 'create'])->name('createTicket');
