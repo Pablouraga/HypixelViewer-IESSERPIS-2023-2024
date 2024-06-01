@@ -17,7 +17,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">Sender</th>
+                            <th scope="col" class="w-25">Sender</th>
                             <th scope="col">Text</th>
                         </tr>
                     </thead>
@@ -39,7 +39,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">Receiver</th>
+                            <th scope="col" class="w-25">Receiver</th>
                             <th scope="col">Text</th>
                         </tr>
                     </thead>
