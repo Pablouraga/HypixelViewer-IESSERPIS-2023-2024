@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    //User list
+    public function index()
+    {
+        $users = User::all();
+        return view('users.backend.userlist', ['users' => $users]);
+    }
+
     // Login function
     public function login(Request $request)
     {
@@ -143,7 +150,7 @@ class UserController extends Controller
     {
         $user = User::findOrfail($user->id);
         $user->delete();
-        return redirect()->route('backend.users.index')->with('success', 'User deleted successfully');
+        return redirect()->route('users.index')->with('success', 'User deleted successfully');
     }
 
     public function friendList()

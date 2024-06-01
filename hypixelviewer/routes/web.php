@@ -54,9 +54,12 @@ Route::delete('/friends/delete/{sender}/{receiver}', [UserController::class, 'de
 
 //Ticket routes
 Route::get('/ticket', [TicketController::class, 'create'])->name('createTicket');
-
 Route::post('/ticket', [TicketController::class, 'store'])->name('storeTicket');
 
+
+//Admin routes
 Route::get('/tickets/all', [TicketController::class, 'index'])->name('tickets.index');
 Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
 Route::delete('/tickets/{ticket}/delete', [TicketController::class, 'destroy'])->name('tickets.destroy');
+Route::get('/users/all', [UserController::class, 'index'])->name('users.index');
+Route::delete('/users/{user}/delete', [UserController::class, 'destroy'])->name('deleteUser');
