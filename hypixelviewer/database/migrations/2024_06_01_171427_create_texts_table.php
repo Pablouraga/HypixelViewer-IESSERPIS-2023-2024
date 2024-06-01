@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('text_user', function (Blueprint $table) {
+        Schema::create('texts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sender')->references('id')->on('users')->constrained()->onDelete('cascade');
             $table->foreignId('receiver')->references('id')->on('users')->constrained()->onDelete('cascade');
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('text_user');
+        Schema::dropIfExists('texts');
     }
 };
