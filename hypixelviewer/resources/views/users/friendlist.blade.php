@@ -41,12 +41,12 @@
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                             </form>
                                             {{-- message friend --}}
-                                            <form action="#" method="post">
+                                            <form action="{{ route('messageCreate', ['receiver' => $friend->username]) }}"
+                                                method="post">
                                                 @csrf
                                                 @method('POST')
-                                                <button type="submit" class="btn btn-primary">Message</button>
+                                                <button type="submit" class="btn btn-primary">Send message</button>
                                             </form>
-
                                         </td>
                                     </tr>
                                 @endforeach
