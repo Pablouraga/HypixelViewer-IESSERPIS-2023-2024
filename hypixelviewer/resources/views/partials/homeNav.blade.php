@@ -8,6 +8,9 @@
         <ul class="navbar-nav position-absolute end-0 pe-4">
             @auth
                 <li class="nav-item">
+                    <a href="{{ route('friendList') }}" class="nav-link">Friends</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('showProfile') }}">{{ Auth::user()->username }}</a>
                 </li>
                 <li class="nav-item">
