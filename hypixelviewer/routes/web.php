@@ -55,6 +55,8 @@ Route::delete('/friends/delete/{sender}/{receiver}', [UserController::class, 'de
 
 //Message routes
 Route::get('/messages', [TextController::class, 'index'])->name('messageList');
+Route::POST('/messages/new/{receiver}', [TextController::class, 'create'])->name('messageCreate');
+Route::POST('/messages/store/{username}', [TextController::class, 'store'])->name('messageStore');
 
 //Ticket routes
 Route::get('/ticket', [TicketController::class, 'create'])->name('createTicket');
