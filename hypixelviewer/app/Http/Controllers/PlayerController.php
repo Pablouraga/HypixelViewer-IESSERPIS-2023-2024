@@ -157,6 +157,10 @@ class PlayerController extends Controller
         $url = "https://api.hypixel.net/v2/guild?key=" . env('HYPIXEL_API_KEY') . '&player=' . session('uuid');
         $json = file_get_contents($url);
         $data = json_decode($json, true);
+        //sort array by guild rank priority
+        usort($data['guild']['ranks'], function ($a, $b) {
+            return $a['priority'] <=> $b['priority'];
+        });
         return view('player.guildDetails', ['guildDetails' => $data]);
     }
 }

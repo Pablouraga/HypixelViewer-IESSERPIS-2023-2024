@@ -3,7 +3,6 @@
 @section('title', session('username') . ' - HypixelViewer')
 
 @section('content')
-    {{-- @dd($guildDetails) --}}
     @if ($guildDetails['success'] == true)
         @if ($guildDetails['guild'] == null)
             <div class="container">
@@ -49,7 +48,7 @@
                                             <p class="card-text">Creation date:
                                                 {{ \Carbon\Carbon::createFromTimestamp($item['created'] / 1000)->format('d-m-Y h:i:s') }}
                                             </p>
-                                            <p class="card-text">Priority: {{ $item['priority'] }}</p>
+                                            {{-- <p class="card-text">Priority: {{ $item['priority'] }}</p> --}}
                                         </div>
                                     </div>
                                 @endforeach
