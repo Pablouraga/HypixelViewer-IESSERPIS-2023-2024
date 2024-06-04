@@ -19,7 +19,6 @@ Route::get('/', function () {
     }
     return view('index');
 })->name('index');
-// Route::get('/', [PlayerController::class, 'index'])->name('index');
 
 //Player routes
 Route::POST('/player', [PlayerController::class, 'playerFind'])->name('playerFind');
@@ -40,18 +39,15 @@ Route::get('/signup', function () {
     return view('users.signup');
 })->name('signupForm');
 
+Route::post('/signup', [UserController::class, 'signup'])->name('signup');
 
 //Ticket routes
 Route::get('/ticket', [TicketController::class, 'create'])->name('createTicket');
 Route::post('/ticket', [TicketController::class, 'store'])->name('storeTicket');
 
 //User routes
-Route::middleware([LoggedMiddleware::class])->group(function () {
-    //Message routes
-    Route::get('/messages', [TextController::class, 'index'])->name('messageList');
-    Route::POST('/messages/new/{receiver}', [TextController::class, 'create'])->name('messageCreate');
-    Route::POST('/messages/store/{username}', [TextController::class, 'store'])->name('messageStore');
-
+Route::middleware([LoggedMiddleware::class],)->group(function () {
+    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
     //User routes
     Route::get('/edit', [UserController::class, 'edit'])->name('editProfile');
     Route::patch('/edit', [UserController::class, 'update'])->name('updateProfile');
@@ -61,12 +57,12 @@ Route::middleware([LoggedMiddleware::class])->group(function () {
     Route::post('/friends/accept/{sender}/{receiver}', [UserController::class, 'acceptFriendRequest'])->name('acceptFriendRequest');
     Route::delete('/friends/reject/{sender}/{receiver}', [UserController::class, 'rejectFriendRequest'])->name('rejectFriendRequest');
     Route::delete('/friends/delete/{sender}/{receiver}', [UserController::class, 'deleteFriend'])->name('deleteFriend');
-
-    //Player routes
     Route::patch('/player/togglefavourite', [PlayerController::class, 'toggleFavourite'])->name('toggleFavourite');
 
-    Route::post('/signup', [UserController::class, 'signup'])->name('signup');
-    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    //Message routes
+    Route::get('/messages', [TextController::class, 'index'])->name('messageList');
+    Route::POST('/messages/new/{receiver}', [TextController::class, 'create'])->name('messageCreate');
+    Route::POST('/messages/store/{username}', [TextController::class, 'store'])->name('messageStore');
 });
 
 
