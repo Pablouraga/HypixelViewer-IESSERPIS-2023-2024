@@ -52,7 +52,8 @@ class PlayerController extends Controller
         //     return view('player.generalView', ['player' => $player, 'favourites' => $favourites, 'linked_account' => $linked_account]);
         // }
         if (Auth::check() && $linked_account != null) {
-            $friendshipStatus = $this->friendStatus();
+            $desiredFriend = User::where('linked_account', $player->username)->first();
+            $friendshipStatus = $this->friendStatus($desiredFriend->id);
             return view('player.generalView', ['player' => $player, 'favourites' => $favourites, 'linked_account' => $linked_account, 'friendshipStatus' => $friendshipStatus]);
         }
         return view('player.generalView', ['player' => $player, 'favourites' => $favourites]);
@@ -64,22 +65,19 @@ class PlayerController extends Controller
         return $user->favourites()->where('player_id', $player->id)->exists();
     }
 
-    public function friendStatus()
+    public function friendStatus($user_to_add)
     {
-        if (Auth::user()->username == session('username')) {
-            $loggedUser = User::where('username', Auth::user()->username)->first();
-            $player = Player::where('username', session('username'))->first();
-            $desiredFriend = User::find($player->id);
-            $friendship = FriendUser::where(function ($query) use ($desiredFriend, $loggedUser) {
-                $query->where('sender', $desiredFriend->id)
-                    ->where('receiver', $loggedUser->id);
-            })->orWhere(function ($query) use ($desiredFriend, $loggedUser) {
-                $query->where('sender', $loggedUser->id)
-                    ->where('receiver', $desiredFriend->id);
-            })->first();
-            if ($friendship) {
-                return $friendship->status;
-            }
+        $loggedUser = User::where('username', Auth::user()->username)->first();
+        $desiredFriend = User::where('id', $user_to_add)->first();
+        $friendship = FriendUser::where(function ($query) use ($desiredFriend, $loggedUser) {
+            $query->where('sender', $desiredFriend->id)
+                ->where('receiver', $loggedUser->id);
+        })->orWhere(function ($query) use ($desiredFriend, $loggedUser) {
+            $query->where('sender', $loggedUser->id)
+                ->where('receiver', $desiredFriend->id);
+        })->first();
+        if ($friendship) {
+            return $friendship->status;
         }
     }
 

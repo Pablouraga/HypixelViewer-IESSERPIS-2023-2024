@@ -13,4 +13,9 @@ class Player extends Model
         'username',
         'uuid',
     ];
+
+    public function favourites()
+    {
+        return $this->belongsToMany(User::class, 'player_user')->withTimestamps();
+    }
 }
