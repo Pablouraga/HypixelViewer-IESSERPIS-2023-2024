@@ -11,9 +11,6 @@
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-body">
-                            {{-- <h5 class="card-title">Linked account: <a
-                                    href="{{ route('generalView', ['username' => $user->linked_account]) }}">{{ $user->linked_account }}</a>
-                            </h5> --}}
                             <img src="https://crafatar.com/renders/body/{{ $data['data']['player']['raw_id'] }}?overlay&scale=10"
                                 alt="Avatar">
                             @if ($hypixelData['success'] == true)
@@ -25,6 +22,7 @@
                                     </ul>
                                 @endif
                             @endif
+                            <a href="{{ route('editProfile') }}" class="btn btn-primary">Edit profile</a>
                         </div>
                     </div>
                 </div>
