@@ -7,6 +7,12 @@
         </ul>
         <ul class="navbar-nav position-absolute end-0 pe-4">
             @auth
+                {{-- if user is admin, dashboard link --}}
+                @if (Auth::user()->role == 'admin')
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a href="{{ route('friendList') }}" class="nav-link">Friends</a>
                 </li>

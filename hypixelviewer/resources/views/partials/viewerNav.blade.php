@@ -29,6 +29,7 @@
         </ul>
         <ul class="navbar-nav position-absolute end-0 pe-4">
             @auth
+                {{-- if user is admin, dashboard link --}}
                 <li class="nav-item">
                     <a href="{{ route('friendList') }}" class="nav-link"></a>
                 </li>
