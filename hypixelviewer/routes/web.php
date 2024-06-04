@@ -67,7 +67,7 @@ Route::middleware([LoggedMiddleware::class],)->group(function () {
 
 
 //Admin routes
-Route::middleware([AdminMiddleware::class],)->group(function () {
+Route::middleware([AdminMiddleware::class])->group(function () {
     Route::get('/tickets/all', [TicketController::class, 'index'])->name('tickets.index');
     Route::get('/tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
     Route::delete('/tickets/{ticket}/delete', [TicketController::class, 'destroy'])->name('tickets.destroy');
