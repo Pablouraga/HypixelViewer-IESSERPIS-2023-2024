@@ -77,4 +77,5 @@ Route::middleware([AdminMiddleware::class],)->group(function () {
     Route::delete('/tickets/{ticket}/delete', [TicketController::class, 'destroy'])->name('tickets.destroy');
     Route::get('/users/all', [UserController::class, 'index'])->name('users.index');
     Route::delete('/users/{user}/delete', [UserController::class, 'destroy'])->name('deleteUser');
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
 });
