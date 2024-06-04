@@ -198,4 +198,12 @@ class UserController extends Controller
         $friendRequest->delete();
         return redirect()->route('friendList');
     }
+
+    public function dashboard()
+    {
+        if (!Auth::check() || Auth::user()->role != 'admin') {
+            return redirect()->route('index');
+        }
+        return view('backend.dashboard');
+    }
 }
