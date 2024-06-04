@@ -20,15 +20,18 @@
                 @endif
             </form>
         </div>
+
         {{-- Jugador que tiene la cuenta enlazada --}}
         @isset($linked_account->linked_account)
             @if ($linked_account->username != Auth::user()->username)
                 {{-- Enviar solicitud de amistad / enviar mensaje --}}
                 <div>
                     @if ($friendshipStatus == 'Accepted')
-                        <form action="#" method="get">
+                        <form action="{{ route('messageCreate', ['receiver' => $linked_account->username]) }}" method="get">
                             <button type="submit" class="btn btn-primary">Send message</button>
                         </form>
+                    @elseif ($friendshipStatus == 'Pending')
+                        <button class="btn btn-secondary">Pending friend request</button>
                     @else
                         <form action="{{ route('addUser') }}" method="post">
                             @csrf
