@@ -156,9 +156,11 @@ class PlayerController extends Controller
         $json = file_get_contents($url);
         $data = json_decode($json, true);
         //sort array by guild rank priority
-        usort($data['guild']['ranks'], function ($a, $b) {
-            return $a['priority'] <=> $b['priority'];
-        });
+        if ($data != null && isset($data['guild']['ranks'])) {
+            usort($data['guild']['ranks'], function ($a, $b) {
+                return $a['priority'] <=> $b['priority'];
+            });
+        }
         return view('player.guildDetails', ['guildDetails' => $data]);
     }
 }
