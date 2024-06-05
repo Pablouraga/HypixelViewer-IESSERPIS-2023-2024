@@ -1,4 +1,4 @@
-<footer class="text-center bg-light position-relative bottom-0">
+<footer class="text-center bg-light position-relative bottom-0 mt-3">
     <div class="container p-4">
 
         <section class="mb-4">
