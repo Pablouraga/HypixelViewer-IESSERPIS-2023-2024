@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body overflow-hidden">
                             <img src="https://crafatar.com/renders/body/{{ $data['data']['player']['raw_id'] }}?overlay&scale=10"
                                 alt="Avatar">
                             @if ($hypixelData['success'] == true)
