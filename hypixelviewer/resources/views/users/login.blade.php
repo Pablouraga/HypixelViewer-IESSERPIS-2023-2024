@@ -28,15 +28,8 @@
                                     @endforeach
                                 @endif
 
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                                    <label class="form-check-label" for="remember">Remember me</label>
-                                </div>
                                 <div class="mt-2">
                                     <a href="{{ route('signup') }}">Don't have an account? Sign up now!</a>
-                                </div>
-                                <div class="mt-2">
-                                    <a href="#">Forgot your password?</a>
                                 </div>
                                 <div class="mt-2">
                                     <input type="submit" value="Log in" class="btn btn-primary">
