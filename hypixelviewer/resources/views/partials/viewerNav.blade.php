@@ -1,6 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="collapse navbar-collapse">
-        <ul class="nav">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('index') }}">HypixelViewer</a>
             </li>
@@ -16,18 +20,18 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('guildDetails', session('username')) }}">Guild Details</a>
             </li>
-            <li class="nav-item ml-auto">
-                <form class="form-inline" action="{{ route('playerFind') }}" method="POST">
-                    @csrf
-                    <div class="input-group">
-                        <label for="username"></label>
-                        <input type="text" name="username" placeholder="Enter player name" class="form-control">
-                        <button type="submit" class="btn btn-outline-secondary">Search</button>
-                    </div>
-                </form>
-            </li>
         </ul>
-        <ul class="navbar-nav position-absolute end-0 pe-4">
+
+        <form class="form-inline my-2 my-lg-0" action="{{ route('playerFind') }}" method="POST">
+            @csrf
+            <div class="input-group">
+                <label for="username"></label>
+                <input type="text" name="username" placeholder="Enter player name" class="form-control">
+                <button type="submit" class="btn btn-outline-secondary">Search</button>
+            </div>
+        </form>
+
+        <ul class="nav">
             @auth
                 {{-- if user is admin, dashboard link --}}
                 @if (Auth::user()->role == 'admin')
