@@ -13,87 +13,83 @@
                 onclick="showContent('bid-history')">Bids</button>
         </div>
 
-        <div id="auction-history">
-            @if (isset($auctionsData))
-                <div class="card mt-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Auction History</h5>
-                        <table class="table table-striped">
-                            <thead>
+        @if (isset($auctionsData))
+            <div class="card mt-3 d-block" id="auction-history">
+                <div class="card-body">
+                    <h5 class="card-title">Auction History</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($auctionsData as $item)
                                 <tr>
-                                    <th scope="col">Item Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Timestamp</th>
+                                    <td>{{ $item['itemName'] }}</td>
+                                    <td>
+                                        @if ($item['highestBid'] == 0)
+                                            Not sold
+                                        @else
+                                            {{ number_format(round((float) $item['highestBid'], 2), 2, '.', ',') }}
+                                        @endif
+                                    </td>
+                                    {{-- Cambio de formato de YYYY-mm-ddTH:i:s a dd-mm-YYYY --}}
+                                    <td>{{ Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s', $item['end'])->format('d-m-Y') }}
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($auctionsData as $item)
-                                    <tr>
-                                        <td>{{ $item['itemName'] }}</td>
-                                        <td>
-                                            @if ($item['highestBid'] == 0)
-                                                Not sold
-                                            @else
-                                                {{ number_format(round((float) $item['highestBid'], 2), 2, '.', ',') }}
-                                            @endif
-                                        </td>
-                                        {{-- Cambio de formato de YYYY-mm-ddTH:i:s a dd-mm-YYYY --}}
-                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s', $item['end'])->format('d-m-Y') }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-            @else
-                <div class="alert alert-danger mt-3 d-block" role="alert" id="auction-error">
-                    <h4 class="alert-heading">Error!</h4>
-                    <p>Player has no sold items!</p>
-                </div>
-            @endif
-        </div>
+            </div>
+        @else
+            <div class="alert alert-danger mt-3 d-block" role="alert" id="auction-history">
+                <h4 class="alert-heading">Error!</h4>
+                <p>Player has no sold items!</p>
+            </div>
+        @endif
 
-        <div id="bid-history">
-            @if (isset($bidsData))
-                <div class="card mt-3 d-none">
-                    <div class="card-body">
-                        <h5 class="card-title">Bid History</h5>
-                        <table class="table table-striped">
-                            <thead>
+        @if (isset($bidsData))
+            <div class="card mt-3 d-none" id="bid-history">
+                <div class="card-body">
+                    <h5 class="card-title">Bid History</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Timestamp</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($bidsData as $item)
                                 <tr>
-                                    <th scope="col">Item Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Timestamp</th>
+                                    <td>{{ $item['itemName'] }}</td>
+                                    <td>
+                                        @if ($item['highestOwnBid'] != $item['highestBid'])
+                                            Not obtained -
+                                            {{ number_format(round((float) $item['highestBid'], 2), 2, '.', ',') }}
+                                        @else
+                                            {{ number_format(round((float) $item['highestBid'], 2), 2, '.', ',') }}
+                                        @endif
+                                    </td>
+                                    <td>{{ Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s', $item['end'])->format('d-m-Y') }}
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($bidsData as $item)
-                                    <tr>
-                                        <td>{{ $item['itemName'] }}</td>
-                                        <td>
-                                            @if ($item['highestOwnBid'] != $item['highestBid'])
-                                                Not obtained -
-                                                {{ number_format(round((float) $item['highestBid'], 2), 2, '.', ',') }}
-                                            @else
-                                                {{ number_format(round((float) $item['highestBid'], 2), 2, '.', ',') }}
-                                            @endif
-                                        </td>
-                                        <td>{{ Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s', $item['end'])->format('d-m-Y') }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
-            @else
-                <div class="alert alert-danger mt-3 d-none" role="alert" id="bid-error">
-                    <h4 class="alert-heading">Error!</h4>
-                    <p>Player has no bought items!</p>
-                </div>
-            @endif
-        </div>
+            </div>
+        @else
+            <div class="alert alert-danger mt-3 d-none" role="alert" id="bid-history">
+                <h4 class="alert-heading">Error!</h4>
+                <p>Player has no bought items!</p>
+            </div>
+        @endif
     </div>
 @endsection
 
@@ -114,16 +110,12 @@
             auctionHistoryBtn[0].classList.add('btn-primary');
             bidHistoryBtn[0].classList.remove('btn-primary');
             bidHistoryBtn[0].classList.add('btn-outline-primary');
-            document.getElementById('auction-error').classList.remove('d-none');
-            document.getElementById('auction-error').classList.add('d-block');
         } else {
             // Muestra solo el contenido de la sección seleccionada
             bidHistoryBtn[0].classList.remove('btn-outline-primary');
             bidHistoryBtn[0].classList.add('btn-primary');
             auctionHistoryBtn[0].classList.remove('btn-primary');
             auctionHistoryBtn[0].classList.add('btn-outline-primary');
-            document.getElementById('bid-error').classList.remove('d-none');
-            document.getElementById('bid-error').classList.add('d-block');
         }
 
         // Muestra solo el contenido de la sección seleccionada
