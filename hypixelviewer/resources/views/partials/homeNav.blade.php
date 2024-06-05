@@ -4,7 +4,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="nav">
+        <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('index') }}">HypixelViewer</a>
             </li>
@@ -17,6 +17,9 @@
                         <a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
                     </li>
                 @endif
+                <li class="nav-item">
+                    <a href="{{ route('messageList') }}" class="nav-link">Messages</a>
+                </li>
                 <li class="nav-item">
                     <a href="{{ route('friendList') }}" class="nav-link">Friends</a>
                 </li>

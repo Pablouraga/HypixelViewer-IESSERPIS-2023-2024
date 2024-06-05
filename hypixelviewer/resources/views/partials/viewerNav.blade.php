@@ -40,6 +40,9 @@
                     </li>
                 @endif
                 <li class="nav-item">
+                    <a href="{{ route('messageList') }}" class="nav-link">Messages</a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('friendList') }}" class="nav-link">Friends</a>
                 </li>
                 <li class="nav-item">
