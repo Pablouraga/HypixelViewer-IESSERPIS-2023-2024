@@ -3,8 +3,8 @@
 @section('title', session('username') . ' - HypixelViewer')
 
 @section('content')
-    <h1 class="text-center">{{ session('username') }}</h1>
-    <div class="container">
+    <h1 class="text-center mt-3">{{ session('username') }}</h1>
+    <div class="container mb-3 mt-3">
         {{-- Profile name --}}
         @if (isset($skyblockStats['cute_name']))
             <div class="profile-name">

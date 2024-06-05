@@ -3,16 +3,17 @@
 @section('title', session('username') . ' - HypixelViewer')
 
 @section('content')
+    <h1 class="text-center mt-3">{{ session('username') }}</h1>
     @if ($guildDetails['success'] == true)
         @if ($guildDetails['guild'] == null)
-            <div class="container">
+            <div class="container mt-3 mb-3">
                 <div class="alert alert-danger mt-3" role="alert">
                     <h4 class="alert-heading">Error!</h4>
                     <p>Player is not in a guild!</p>
                 </div>
             </div>
         @else
-            <div class="container">
+            <div class="container mt-3 mb-3">
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card mt-3">
