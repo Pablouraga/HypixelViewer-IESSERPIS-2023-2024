@@ -124,7 +124,7 @@ class PlayerController extends Controller
         //get auction history
         $auctionsUrl = "https://sky.coflnet.com/api/player/" . $trimmedUuid .  "/auctions?page=";
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $auctionsJson = file_get_contents($auctionsUrl . $i);
             $auctionsData = json_decode($auctionsJson, true);
             foreach ($auctionsData as $auction) {
@@ -132,7 +132,19 @@ class PlayerController extends Controller
             }
         }
 
-        return view('player.auctionHistory', ['bidsData' => $bidsDataFinal, 'auctionsData' => $auctionsDataFinal]);
+        if (isset($bidsDataFinal) && isset($auctionsDataFinal)) {
+            return view('player.auctionHistory', ['bidsData' => $bidsDataFinal, 'auctionsData' => $auctionsDataFinal]);
+        }
+
+        if (!isset($bidsDataFinal) && isset($auctionsDataFinal)) {
+            return view('player.auctionHistory', ['auctionsData' => $auctionsDataFinal]);
+        }
+
+        if (isset($bidsDataFinal) && !isset($auctionsDataFinal)) {
+            return view('player.auctionHistory', ['bidsData' => $bidsDataFinal]);
+        }
+
+        return view('player.auctionHistory');
     }
 
     public function skyblockStats()
@@ -141,9 +153,11 @@ class PlayerController extends Controller
         $url = "https://api.hypixel.net/v2/skyblock/profiles?key=" . env('HYPIXEL_API_KEY') . '&uuid=' . session('uuid');
         $json = file_get_contents($url);
         $data = json_decode($json, true);
-        foreach ($data['profiles'] as $item) {
-            if ($item['selected']) {
-                $data = $item;
+        if (isset($data['profiles'])) {
+            foreach ($data['profiles'] as $item) {
+                if ($item['selected']) {
+                    $data = $item;
+                }
             }
         }
         return view('player.skyblockStats', ['skyblockStats' => $data]);
