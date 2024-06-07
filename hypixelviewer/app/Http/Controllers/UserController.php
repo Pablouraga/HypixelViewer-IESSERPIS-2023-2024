@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EditAccountRequest;
+use App\Http\Requests\SignupRequest;
 use App\Models\FriendUser;
 use App\Models\Player;
 use App\Models\User;
@@ -101,14 +102,8 @@ class UserController extends Controller
     }
 
     //Signup function
-    public function signup(Request $request)
+    public function signup(SignupRequest $request)
     {
-        $request->validate([
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
-
         $user = new User();
         $user->username = $request->username;
         $user->email = $request->email;
