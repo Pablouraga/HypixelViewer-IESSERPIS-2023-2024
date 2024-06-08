@@ -44,5 +44,17 @@
                 </form>
             </div>
         @endauth
+        <div class="row mt-3">
+            <a href="{{ route('serverStats', session('username')) }}" class="btn btn-primary btn-block col mx-3">Server
+                Stats</a>
+            <a href="{{ route('auctionHistory', session('username')) }}" class="btn btn-primary btn-block col mx-3">Auction
+                History</a>
+        </div>
+        <div class="row mt-3">
+            <a href="{{ route('skyblockStats', session('username')) }}" class="btn btn-primary btn-block col mx-3">Skyblock
+                Profile</a>
+            <a href="{{ route('guildDetails', session('username')) }}" class="btn btn-primary btn-block col mx-3">Guild
+                Details</a>
+        </div>
     </div>
 @endsection
