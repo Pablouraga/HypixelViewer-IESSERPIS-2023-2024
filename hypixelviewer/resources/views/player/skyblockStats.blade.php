@@ -219,7 +219,7 @@
                                         <div class="row mb-3">
                                             @foreach ($member['dungeons']['dungeon_types']['catacombs']['tier_completions'] as $key => $item)
                                                 @if ($key != 'total')
-                                                    <div class="col-3 mb-3">
+                                                    <div class="col-md-3 mb-3">
                                                         <div class="card floor-name-container">
                                                             <div class="card-header">
                                                                 @if ($key == 0)
@@ -232,7 +232,9 @@
                                                                 <div class="completions-tracking">Completions:
                                                                     {{ $item }}</div>
                                                                 <div class="fastest-run"></div>
-                                                                <div class="most-damage-healer">Most healer damage
+                                                                <div class="most-damage-healer"><img
+                                                                        src="{{ asset('minecraft/textures/items/potion_bottle_drinkable.png') }}"
+                                                                        alt="">
                                                                     {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_healer'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_healer'][$key], 0, '', ',') : 'N / A' }}
                                                                 </div>
                                                                 <div class="most-damage-tank">Most tank damage
@@ -251,7 +253,7 @@
                                                                     {{ isset($member['dungeons']['dungeon_types']['catacombs']['fastest_time_s'][$key]) ? $member['dungeons']['dungeon_types']['catacombs']['fastest_time_s'][$key] : 'N / A' }}
                                                                 </div>
                                                                 <div class="fastest-time-s">Fastest S+ run
-                                                                    {{ isset($member['dungeons']['dungeon_types']['catacombs']['fastest_time_s_plus'][$key]) ? $member['dungeons']['dungeon_types']['catacombs']['fastest_time_s'][$key] : 'N / A' }}
+                                                                    {{ isset($member['dungeons']['dungeon_types']['catacombs']['fastest_time_s_plus'][$key]) ? $member['dungeons']['dungeon_types']['catacombs']['fastest_time_s_plus'][$key] : 'N / A' }}
                                                                 </div>
                                                             </div>
                                                         </div>
