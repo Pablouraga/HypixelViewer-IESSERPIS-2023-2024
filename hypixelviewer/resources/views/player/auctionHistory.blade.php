@@ -27,7 +27,7 @@
                         <tbody>
                             @foreach ($auctionsData as $item)
                                 <tr>
-                                    <td>{{ $item['itemName'] }}</td>
+                                    <td>{{ preg_replace('/§[a-zA-Z0-9]/', '', $item['itemName']) }}</td>
                                     <td>
                                         @if ($item['highestBid'] == 0)
                                             Not sold
@@ -66,7 +66,7 @@
                         <tbody>
                             @foreach ($bidsData as $item)
                                 <tr>
-                                    <td>{{ $item['itemName'] }}</td>
+                                    <td>{{ preg_replace('/§[a-zA-Z0-9]/', '', $item['itemName']) }}</td>
                                     <td>
                                         @if ($item['highestOwnBid'] != $item['highestBid'])
                                             Not obtained -
