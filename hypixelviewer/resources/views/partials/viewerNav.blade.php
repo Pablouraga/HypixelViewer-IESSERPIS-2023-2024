@@ -6,7 +6,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('index') }}">HypixelViewer</a>
+                <a class="nav-link" href="{{ route('index') }}"><img src="{{ asset('favicon.ico') }}"
+                        alt="Hypixel Viewer Logo"></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('serverStats', session('username')) }}">Server Stats</a>
