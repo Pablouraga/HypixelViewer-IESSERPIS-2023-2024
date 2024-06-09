@@ -14,7 +14,13 @@ class TextController extends Controller
     {
         $user = Auth::user();
         $inbox = Text::where('receiver', $user->id)->get();
+        foreach ($inbox as $text) {
+            $text->senderUsername = User::find($text->sender)->username;
+        }
         $sent = Text::where('sender', $user->id)->get();
+        foreach ($sent as $text) {
+            $text->receiverUsername = User::find($text->receiver)->username;
+        }
         return view('users.messages.index', ['inbox' => $inbox, 'sent' => $sent]);
     }
 

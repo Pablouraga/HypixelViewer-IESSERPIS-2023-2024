@@ -24,7 +24,7 @@
                     <tbody>
                         @foreach ($inbox as $message)
                             <tr>
-                                <td>{{ $message->sender }}</td>
+                                <td>{{ $message->senderUsername }}</td>
                                 <td>{{ $message->text }}</td>
                             </tr>
                         @endforeach
@@ -46,7 +46,7 @@
                     <tbody>
                         @foreach ($sent as $message)
                             <tr>
-                                <td>{{ $message->receiver }}</td>
+                                <td>{{ $message->receiverUsername }}</td>
                                 <td>{{ $message->text }}</td>
                             </tr>
                         @endforeach

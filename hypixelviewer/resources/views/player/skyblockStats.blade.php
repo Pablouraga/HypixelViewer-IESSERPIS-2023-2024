@@ -330,7 +330,7 @@
                                                 @endforeach
                                             </div>
                                         @else
-                                            No catacombs found
+                                            No master catacombs found
                                         @endif
                                     </div>
                                 </div>

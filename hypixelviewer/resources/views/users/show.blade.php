@@ -7,8 +7,8 @@
     <div class="container">
         <h1 class="text-center">{{ $user->username }}</h1>
         @if ($user->linked_account != null)
-            <div class="row">
-                <div class="col-md-3">
+            <div class="row mt-3">
+                <div class="col-md-3 mb-3">
                     <div class="card">
                         <div class="card-body overflow-hidden">
                             <img src="https://crafatar.com/renders/body/{{ $data['data']['player']['raw_id'] }}?overlay&scale=10"
