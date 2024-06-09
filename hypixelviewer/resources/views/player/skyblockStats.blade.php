@@ -213,57 +213,131 @@
                                     @endif
                                 </div>
                                 <div class="dungeons">
-                                    @if (isset($member['dungeons']['dungeon_types']['catacombs']['tier_completions']))
-                                        <h3>Catacombs dungeon floor stats</h3>
-                                        {{-- Recorrer el array mostrando los elementos mostrarlos en una disposicion de 2 filas y 4 elementos por fila --}}
-                                        <div class="row mb-3">
-                                            @foreach ($member['dungeons']['dungeon_types']['catacombs']['tier_completions'] as $key => $item)
-                                                @if ($key != 'total')
-                                                    <div class="col-md-3 mb-3">
-                                                        <div class="card floor-name-container">
-                                                            <div class="card-header">
-                                                                @if ($key == 0)
-                                                                    Entrance
-                                                                @else
-                                                                    Floor {{ $key }}
-                                                                @endif
-                                                            </div>
-                                                            <div class="card-body">
-                                                                <div class="completions-tracking">Completions:
-                                                                    {{ $item }}</div>
-                                                                <div class="fastest-run"></div>
-                                                                <div class="most-damage-healer"><img
-                                                                        src="{{ asset('minecraft/textures/items/potion_bottle_drinkable.png') }}"
-                                                                        alt="">
-                                                                    {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_healer'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_healer'][$key], 0, '', ',') : 'N / A' }}
+                                    <div class="catacombs">
+                                        @if (isset($member['dungeons']['dungeon_types']['catacombs']['tier_completions']))
+                                            <h3>Catacombs dungeon floor stats</h3>
+                                            {{-- Recorrer el array mostrando los elementos mostrarlos en una disposicion de 2 filas y 4 elementos por fila --}}
+                                            <div class="row mb-3">
+                                                @foreach ($member['dungeons']['dungeon_types']['catacombs']['tier_completions'] as $key => $item)
+                                                    @if ($key != 'total')
+                                                        <div class="col-md-3 mb-3">
+                                                            <div class="card floor-name-container">
+                                                                <div class="card-header">
+                                                                    @if ($key == 0)
+                                                                        Entrance
+                                                                    @else
+                                                                        Floor {{ $key }}
+                                                                    @endif
                                                                 </div>
-                                                                <div class="most-damage-tank">Most tank damage
-                                                                    {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_tank'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_tank'][$key], 0, '', ',') : 'N / A' }}
-                                                                </div>
-                                                                <div class="most-damage-berserk">Most berserk damage
-                                                                    {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_berserk'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_berserk'][$key], 0, '', ',') : 'N / A' }}
-                                                                </div>
-                                                                <div class="most-damage-mage">Most mage damage
-                                                                    {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_mage'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_mage'][$key], 0, '', ',') : 'N / A' }}
-                                                                </div>
-                                                                <div class="most-damage-archer">Most archer damage
-                                                                    {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_archer'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_archer'][$key], 0, '', ',') : 'N / A' }}
-                                                                </div>
-                                                                <div class="fastest-time-s">Fastest S run
-                                                                    {{ isset($member['dungeons']['dungeon_types']['catacombs']['fastest_time_s'][$key]) ? $member['dungeons']['dungeon_types']['catacombs']['fastest_time_s'][$key] : 'N / A' }}
-                                                                </div>
-                                                                <div class="fastest-time-s">Fastest S+ run
-                                                                    {{ isset($member['dungeons']['dungeon_types']['catacombs']['fastest_time_s_plus'][$key]) ? $member['dungeons']['dungeon_types']['catacombs']['fastest_time_s_plus'][$key] : 'N / A' }}
+                                                                <div class="card-body">
+                                                                    <div class="completions-tracking">Completions:
+                                                                        {{ $item }}</div>
+                                                                    <div class="fastest-run"></div>
+                                                                    <div class="most-damage-healer"><img
+                                                                            src="{{ asset('minecraft/textures/items/potion_bottle_drinkable.png') }}"
+                                                                            alt="">
+                                                                        {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_healer'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_healer'][$key], 0, '', ',') : 'N / A' }}
+                                                                    </div>
+                                                                    <div class="most-damage-tank"><img
+                                                                            src="{{ asset('minecraft/textures/items/leather_chestplate.png') }}"
+                                                                            alt="">
+                                                                        {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_tank'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_tank'][$key], 0, '', ',') : 'N / A' }}
+                                                                    </div>
+                                                                    <div class="most-damage-berserk"><img
+                                                                            src="{{ asset('minecraft/textures/items/iron_sword.png') }}"
+                                                                            alt="">
+                                                                        {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_berserk'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_berserk'][$key], 0, '', ',') : 'N / A' }}
+                                                                    </div>
+                                                                    <div class="most-damage-mage"><img
+                                                                            src="{{ asset('minecraft/textures/items/blaze_rod.png') }}"
+                                                                            alt="">
+                                                                        {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_mage'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_mage'][$key], 0, '', ',') : 'N / A' }}
+                                                                    </div>
+                                                                    <div class="most-damage-archer"><img
+                                                                            src="{{ asset('minecraft/textures/items/bow_standby.png') }}"
+                                                                            alt="">
+                                                                        {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_archer'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_archer'][$key], 0, '', ',') : 'N / A' }}
+                                                                    </div>
+                                                                    {{-- Unix time duration conversion --}}
+                                                                    <div class="fastest-time-s">Fastest S run
+                                                                        {{ isset($member['dungeons']['dungeon_types']['catacombs']['fastest_time_s'][$key]) ? gmdate('H:i:s', $member['dungeons']['dungeon_types']['catacombs']['fastest_time'][$key]) : 'N / A' }}
+                                                                    </div>
+                                                                    <div class="fastest-time-s">Fastest S+ run
+                                                                        {{ isset($member['dungeons']['dungeon_types']['catacombs']['fastest_time_s_plus'][$key]) ? gmdate('H:i:s', $member['dungeons']['dungeon_types']['catacombs']['fastest_time_s_plus'][$key]) : 'N / A' }}
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    @else
-                                        No dungeons found
-                                    @endif
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            No catacombs found
+                                        @endif
+                                    </div>
+                                    {{-- -------------------- --}}
+                                    <div class="master-catacombs">
+                                        @if (isset($member['dungeons']['dungeon_types']['master_catacombs']['tier_completions']))
+                                            <h3>Master Catacombs dungeon floor stats</h3>
+                                            {{-- Recorrer el array mostrando los elementos mostrarlos en una disposicion de 2 filas y 4 elementos por fila --}}
+                                            <div class="row mb-3">
+                                                @foreach ($member['dungeons']['dungeon_types']['master_catacombs']['tier_completions'] as $key => $item)
+                                                    @if ($key != 'total')
+                                                        <div class="col-md-3 mb-3">
+                                                            <div class="card floor-name-container">
+                                                                <div class="card-header">
+                                                                    @if ($key == 0)
+                                                                        Entrance
+                                                                    @else
+                                                                        Master Mode Floor {{ $key }}
+                                                                    @endif
+                                                                </div>
+                                                                <div class="card-body">
+                                                                    <div class="completions-tracking">Completions:
+                                                                        {{ $item }}</div>
+                                                                    <div class="fastest-run"></div>
+                                                                    <div class="most-damage-healer"><img
+                                                                            src="{{ asset('minecraft/textures/items/potion_bottle_drinkable.png') }}"
+                                                                            alt="">
+                                                                        {{ isset($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_healer'][$key]) ? number_format($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_healer'][$key], 0, '', ',') : 'N / A' }}
+                                                                    </div>
+                                                                    <div class="most-damage-tank"><img
+                                                                            src="{{ asset('minecraft/textures/items/leather_chestplate.png') }}"
+                                                                            alt="">
+                                                                        {{ isset($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_tank'][$key]) ? number_format($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_tank'][$key], 0, '', ',') : 'N / A' }}
+                                                                    </div>
+                                                                    <div class="most-damage-berserk"><img
+                                                                            src="{{ asset('minecraft/textures/items/iron_sword.png') }}"
+                                                                            alt="">
+                                                                        {{ isset($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_berserk'][$key]) ? number_format($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_berserk'][$key], 0, '', ',') : 'N / A' }}
+                                                                    </div>
+                                                                    <div class="most-damage-mage"><img
+                                                                            src="{{ asset('minecraft/textures/items/blaze_rod.png') }}"
+                                                                            alt="">
+                                                                        {{ isset($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_mage'][$key]) ? number_format($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_mage'][$key], 0, '', ',') : 'N / A' }}
+                                                                    </div>
+                                                                    <div class="most-damage-archer"><img
+                                                                            src="{{ asset('minecraft/textures/items/bow_standby.png') }}"
+                                                                            alt="">
+                                                                        {{ isset($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_archer'][$key]) ? number_format($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_archer'][$key], 0, '', ',') : 'N / A' }}
+                                                                    </div>
+                                                                    {{-- Unix time duration conversion --}}
+                                                                    <div class="fastest-time-s">Fastest S run
+                                                                        {{ isset($member['dungeons']['dungeon_types']['master_catacombs']['fastest_time_s'][$key]) ? gmdate('H:i:s', $member['dungeons']['dungeon_types']['master_catacombs']['fastest_time_s'][$key] / 1000) : 'N / A' }}
+                                                                    </div>
+                                                                    <div class="fastest-time-s">Fastest S+ run
+                                                                        {{ isset($member['dungeons']['dungeon_types']['master_catacombs']['fastest_time_s_plus'][$key]) ? gmdate('H:i:s', $member['dungeons']['dungeon_types']['master_catacombs']['fastest_time_s_plus'][$key] / 1000) : 'N / A' }}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            No catacombs found
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         @endif
