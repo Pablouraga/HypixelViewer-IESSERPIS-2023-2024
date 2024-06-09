@@ -29,7 +29,6 @@
                     </div>
                 @endisset
             @endif
-            {{-- Icono que al pulsar ejecute la funcion toggleFavourite() dentro de PlayerController --}}
             <div>
                 <form action="{{ route('toggleFavourite', $player) }}" method="post">
                     @csrf

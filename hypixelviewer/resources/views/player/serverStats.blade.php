@@ -13,7 +13,6 @@
                         <div class="card-body">
                             <h5 class="card-title">Player Information</h5>
                             <div class="card-text">
-                                {{-- {{ \Carbon\Carbon::createFromTimestamp( / 1000)->format('d-m-Y h:i:s') }} --}}
                                 <div class="first-login">
                                     First login:
                                     {{ \Carbon\Carbon::createFromTimestamp($serverStats['firstLogin'] / 1000)->format('d-m-Y h:i:s') }}

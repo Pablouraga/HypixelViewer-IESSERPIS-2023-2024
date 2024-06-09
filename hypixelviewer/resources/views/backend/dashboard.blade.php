@@ -6,7 +6,6 @@
 
     <div class="container mt-3 mb-3">
         <h1 class="text-center">Dashboard</h1>
-        {{-- Two big centered buttons, one redirects to tickets.index and another to users.index --}}
         <div class="row">
             <div class="col-md-6 mt-3">
                 <a href="{{ route('tickets.index') }}" class="btn btn-primary btn-lg btn-block w-100">Tickets</a>

@@ -6,7 +6,6 @@
     <h1 class="text-center">{{ session('username') }}</h1>
     <div class="container mt-3">
         <div class="section-buttons row">
-            {{-- Dos botones, uno para mostrar auctions y otro para mostrar bids, que ocupen los dos todo el espacio de la clase padre y que sean del mismo tamaño --}}
             <button class="btn btn-primary col mx-3 auction-history-btn"
                 onclick="showContent('auction-history')">Auctions</button>
             <button class="btn btn-outline-primary col mx-3 bid-history-btn"

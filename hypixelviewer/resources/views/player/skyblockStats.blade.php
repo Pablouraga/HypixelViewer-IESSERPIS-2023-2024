@@ -216,7 +216,6 @@
                                     <div class="catacombs">
                                         @if (isset($member['dungeons']['dungeon_types']['catacombs']['tier_completions']))
                                             <h3>Catacombs dungeon floor stats</h3>
-                                            {{-- Recorrer el array mostrando los elementos mostrarlos en una disposicion de 2 filas y 4 elementos por fila --}}
                                             <div class="row mb-3">
                                                 @foreach ($member['dungeons']['dungeon_types']['catacombs']['tier_completions'] as $key => $item)
                                                     @if ($key != 'total')
@@ -258,7 +257,6 @@
                                                                             alt="">
                                                                         {{ isset($member['dungeons']['dungeon_types']['catacombs']['most_damage_archer'][$key]) ? number_format($member['dungeons']['dungeon_types']['catacombs']['most_damage_archer'][$key], 0, '', ',') : 'N / A' }}
                                                                     </div>
-                                                                    {{-- Unix time duration conversion --}}
                                                                     <div class="fastest-time-s">Fastest S run
                                                                         {{ isset($member['dungeons']['dungeon_types']['catacombs']['fastest_time_s'][$key]) ? gmdate('H:i:s', $member['dungeons']['dungeon_types']['catacombs']['fastest_time'][$key]) : 'N / A' }}
                                                                     </div>
@@ -275,11 +273,9 @@
                                             No catacombs found
                                         @endif
                                     </div>
-                                    {{-- -------------------- --}}
                                     <div class="master-catacombs">
                                         @if (isset($member['dungeons']['dungeon_types']['master_catacombs']['tier_completions']))
                                             <h3>Master Catacombs dungeon floor stats</h3>
-                                            {{-- Recorrer el array mostrando los elementos mostrarlos en una disposicion de 2 filas y 4 elementos por fila --}}
                                             <div class="row mb-3">
                                                 @foreach ($member['dungeons']['dungeon_types']['master_catacombs']['tier_completions'] as $key => $item)
                                                     @if ($key != 'total')
@@ -321,7 +317,6 @@
                                                                             alt="">
                                                                         {{ isset($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_archer'][$key]) ? number_format($member['dungeons']['dungeon_types']['master_catacombs']['most_damage_archer'][$key], 0, '', ',') : 'N / A' }}
                                                                     </div>
-                                                                    {{-- Unix time duration conversion --}}
                                                                     <div class="fastest-time-s">Fastest S run
                                                                         {{ isset($member['dungeons']['dungeon_types']['master_catacombs']['fastest_time_s'][$key]) ? gmdate('H:i:s', $member['dungeons']['dungeon_types']['master_catacombs']['fastest_time_s'][$key] / 1000) : 'N / A' }}
                                                                     </div>

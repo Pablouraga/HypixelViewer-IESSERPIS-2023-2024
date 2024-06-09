@@ -21,7 +21,6 @@
                     @foreach ($favourites as $player)
                         <div class="col-md-4 mb-4">
                             <div class="card">
-                                {{-- <a href="{{ route('redirectToPlayerShow', ['username' => $player->username]) }}"> --}}
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
                                         <img src="https://crafatar.com/avatars/{{ str_replace('-', '', $player->uuid) }}?size=96&overlay"
@@ -29,7 +28,6 @@
                                         <h5 class="card-title" style="margin-left: 10px;">{{ $player->username }}</h5>
                                     </div>
                                 </div>
-                                {{-- </a> --}}
                             </div>
                         </div>
                     @endforeach
